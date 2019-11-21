@@ -3,6 +3,22 @@
 require_once 'selfservice.civix.php';
 use CRM_Selfservice_ExtensionUtil as E;
 
+
+
+/**
+ * Hook implementation: New Tokens
+ */
+function selfservice_civicrm_tokens( &$tokens ) {
+  CRM_Selfservice_HashLinks::addTokens($tokens);
+}
+
+/**
+ * Hook implementation: New Tokens
+ */
+function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = array(), $context = null) {
+  CRM_Selfservice_HashLinks::tokenValues($values, $cids, $job, $tokens, $context);
+}
+
 /**
  * Implements hook_civicrm_config().
  *

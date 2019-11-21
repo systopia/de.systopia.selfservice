@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/admin/selfservice</path>
+    <page_callback>CRM_Selfservice_Form_Settings</page_callback>
+    <title>Self-Service Setup</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+    <adminGroup>CiviContribute</adminGroup>
+    <component>CiviContribute</component>
+    <icon>admin/small/online_contribution_pages.png</icon>
+    <weight>100</weight>
+  </item>
+</menu>
