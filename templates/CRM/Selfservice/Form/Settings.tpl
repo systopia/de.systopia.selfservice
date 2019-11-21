@@ -15,11 +15,6 @@
 <br/>
 <h3>{ts domain="de.systopia.selfservice"}Request New Link (<code>Selfservice.sendlink</code>){/ts}</h3>
 <div class="crm-section">
-    <div class="label">{$form.selfservice_xcm_profile.label}</div>
-    <div class="content">{$form.selfservice_xcm_profile.html}</div>
-    <div class="clear"></div>
-</div>
-<div class="crm-section">
     <div class="label">{$form.selfservice_link_request_sender.label}</div>
     <div class="content">{$form.selfservice_link_request_sender.html}</div>
     <div class="clear"></div>

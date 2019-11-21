@@ -24,15 +24,6 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
   const HASH_LINK_COUNT = 10;
 
   public function buildQuickForm() {
-    // Configuration for Mailing Self-Service
-    $this->add(
-        'select',
-        'selfservice_xcm_profile',
-        E::ts('XCM Profile'),
-        $this->getXCMProfileList(),
-        TRUE
-    );
-
     // Configuration Self-Service link request
     $templates = $this->getMessageTemplates();
     $this->add(
@@ -172,17 +163,5 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
       $templates[$template['id']] = $template['msg_title'];
     }
     return $templates;
-  }
-
-  /**
-   * Get list of XCM profiles (if installed)
-   *
-   */
-  protected function getXCMProfileList() {
-    if (class_exists('CRM_Xcm_Configuration')) {
-      return CRM_Xcm_Configuration::getProfileList();
-    } else {
-      return ['' => E::ts("n/a")];
-    }
   }
 }
