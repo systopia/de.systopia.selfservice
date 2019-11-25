@@ -24,7 +24,10 @@ function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens =
  * Set permissions for runner/engine API call
  */
 function selfservice_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
-  $permissions['selfservice']['sendlink'] = ['access CiviCRM'];
+  $selfservice_permissions = CRM_Selfservice_Configuration::getAPIPermissions();
+  $permissions['self_service']['sendlink']    = $selfservice_permissions;
+  $permissions['self_service']['get_contact'] = $selfservice_permissions;
+  $permissions['self_service']['get_hash']    = $selfservice_permissions;
 }
 
 /**

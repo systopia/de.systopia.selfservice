@@ -25,6 +25,13 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
 
   public function buildQuickForm() {
     // Configuration Self-Service link request
+    $this->add(
+        'select',
+        'selfservice_link_request_permissions',
+        E::ts('Additional Permission(s)'),
+        ['' => E::ts("only: 'access CiviCRM backend and API'")] + CRM_Core_Permission::basicPermissions(),
+        FALSE
+    );
     $templates = $this->getMessageTemplates();
     $this->add(
         'select',

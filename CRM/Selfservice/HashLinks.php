@@ -63,20 +63,46 @@ class CRM_Selfservice_HashLinks {
    * @param $contact_ids array list of contact Ids
    * @return array list of hash by contact ID
    */
-  protected static function getContactHashes($contact_ids) {
+  public static function getContactHashes($contact_ids) {
     $hashes = [];
     if ($contact_ids) {
-      $query = civicrm_api3('Contact', 'get', [
-          'return'       => 'hash,id',
-          'option.limit' => 0,
-          'id'           => ['IN' => $contact_ids]
-      ]);
-      foreach ($query['values'] as $contact) {
-        $hashes[$contact['id']] = $contact['hash'];
+      foreach ($contact_ids as $contact_id) {
+        $hashes[$contact_id] = self::getContactHash($contact_id);
       }
     }
-
     return $hashes;
+  }
+
+  /**
+   * Load the hash for all given contacts
+   * @param $contact_id integer contact ID
+   * @return string hash
+   */
+  public static function getContactHash($contact_id) {
+    return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id);
+  }
+
+  /**
+   * Get the Contact ID from a valid hash
+   *
+   * @param $contact_hash string contact hash as created by ::getContactHashes
+   * @return null|integer Contact ID if the hash is valid
+   */
+  public static function getContactIdFromHash($contact_hash) {
+    if (preg_match('/^(?<contact_id>[0-9]+)_(?<checksum>[0-9_[a-z]+)$/i', $contact_hash, $match)) {
+      $contact_id = (int) $match['contact_id'];
+      $valid = CRM_Contact_BAO_Contact_Utils::validChecksum($contact_id, $match['checksum']);
+      if ($valid) {
+        // everything checks out
+        return $contact_id;
+      } else {
+        // checksum not valid (any more)
+        return NULL;
+      }
+    } else {
+      // code pattern not recognised
+      return NULL;
+    }
   }
 
   /**

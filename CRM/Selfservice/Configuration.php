@@ -28,7 +28,7 @@ class CRM_Selfservice_Configuration {
   public static function getSetting($name, $default_value = NULL) {
     // load settings
     if (self::$config === NULL) {
-      self::$config = Civi::settings()->get('selfservice_personalised_links');
+      self::$config = Civi::settings()->get('selfservice_configuration');
       if (self::$config === NULL) {
         self::$config = []; // avoid re-loading
       }
@@ -38,4 +38,15 @@ class CRM_Selfservice_Configuration {
     return CRM_Utils_Array::value($name, self::$config, $default_value);
   }
 
+  /**
+   * Get the permission required to call the API
+   */
+  public static function getAPIPermissions() {
+    $permission = self::getSetting('selfservice_link_request_permissions');
+    if ($permission) {
+      return [$permission, 'access CiviCRM backend and API'];
+    } else {
+      return ['access CiviCRM backend and API'];
+    }
+  }
 }
