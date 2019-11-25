@@ -23,6 +23,7 @@
  */
 function civicrm_api3_selfservice_sendlink($params)
 {
+  CRM_Selfservice_Configuration::log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
 
   // get templates
   $template_email_known     = (int) CRM_Selfservice_Configuration::getSetting('selfservice_link_request_template_contact_known');

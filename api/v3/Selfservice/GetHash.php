@@ -22,6 +22,8 @@
  */
 function civicrm_api3_selfservice_get_hash($params)
 {
+  CRM_Selfservice_Configuration::log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
+
   $contact_id = (int) $params['contact_id'];
   if (!$contact_id) {
     return civicrm_api3_create_error("No contact ID given");

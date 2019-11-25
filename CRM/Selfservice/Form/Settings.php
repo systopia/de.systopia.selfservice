@@ -27,6 +27,13 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     // Configuration Self-Service link request
     $this->add(
         'select',
+        'selfservice_link_request_log',
+        E::ts('Log Requests'),
+        [0 => E::ts("No"), 1 => E::ts("Only Link Requests"), 2 => E::ts("Everything")],
+        FALSE
+    );
+    $this->add(
+        'select',
         'selfservice_link_request_permissions',
         E::ts('Additional Permission(s)'),
         ['' => E::ts("only: 'access CiviCRM backend and API'")] + CRM_Core_Permission::basicPermissions(),

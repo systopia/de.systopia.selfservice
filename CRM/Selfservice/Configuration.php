@@ -18,6 +18,9 @@ class CRM_Selfservice_Configuration {
 
   protected static $config = NULL;
 
+  const LOG_LINK_REQUESTS_ONLY = 1;
+  const LOG_ALL_API            = 2;
+
   /**
    * Get the given setting
    *
@@ -47,6 +50,35 @@ class CRM_Selfservice_Configuration {
       return [$permission, 'access CiviCRM backend and API'];
     } else {
       return ['access CiviCRM backend and API'];
+    }
+  }
+
+
+  /**
+   * Check if the following log level should be logged:
+   *  1 => link requests only
+   *  2 => other requests
+   * @param $level integer log level, see constants
+   * @return bool true if it should be logged
+   */
+  public static function shouldLog($level) {
+    $max_level = (int) self::getSetting('selfservice_link_request_log');
+    return $level <= $max_level;
+  }
+
+  /**
+   * Log the given data, if the passed log level is activated
+   *
+   * @param $identifier  string  human readable identifier to indicate what's being logged
+   * @param $data        mixed   log data
+   * @param $log_level   integer log level, see ::shouldLog
+   */
+  public static function log($identifier, $data, $log_level) {
+    if (self::shouldLog($log_level)) {
+      if (!is_string($data)) {
+        $data = json_encode($data);
+      }
+      Civi::log()->debug("{$identifier}: {$data}");
     }
   }
 }
