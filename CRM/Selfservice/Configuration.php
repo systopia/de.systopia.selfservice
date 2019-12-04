@@ -47,7 +47,7 @@ class CRM_Selfservice_Configuration {
   public static function getAPIPermissions() {
     $permission = self::getSetting('selfservice_link_request_permissions');
     if ($permission) {
-      return [$permission, 'access CiviCRM backend and API'];
+      return [$permission];
     } else {
       return ['access CiviCRM backend and API'];
     }
