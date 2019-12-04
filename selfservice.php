@@ -25,9 +25,9 @@ function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens =
  */
 function selfservice_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   $selfservice_permissions = CRM_Selfservice_Configuration::getAPIPermissions();
-  $permissions['self_service']['sendlink']    = $selfservice_permissions;
-  $permissions['self_service']['get_contact'] = $selfservice_permissions;
-  $permissions['self_service']['get_hash']    = $selfservice_permissions;
+  $permissions['selfservice']['sendlink']    = $selfservice_permissions;
+  $permissions['selfservice']['get_contact'] = $selfservice_permissions;
+  $permissions['selfservice']['get_hash']    = $selfservice_permissions;
 }
 
 /**
