@@ -35,7 +35,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     $this->add(
         'select',
         'selfservice_link_request_permissions',
-        E::ts('Additional Permission(s)'),
+        E::ts('Permission'),
         ['' => E::ts("only: 'access CiviCRM backend and API'")] + CRM_Core_Permission::basicPermissions(),
         FALSE
     );
@@ -43,14 +43,14 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     $this->add(
         'select',
         'selfservice_link_request_template_contact_known',
-        E::ts('E-Mail Template for Case: Email is known'),
+        E::ts('E-Mail Template for Case: Email is <i>known</i>'),
         $templates,
         FALSE
     );
     $this->add(
         'select',
         'selfservice_link_request_template_contact_unknown',
-        E::ts('E-Mail Template for Case: Email is <i>not</i> known'),
+        E::ts('E-Mail Template for Case: Email is <i>not known</i>'),
         $templates,
         FALSE
     );
