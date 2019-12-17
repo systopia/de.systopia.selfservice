@@ -39,7 +39,7 @@ function civicrm_api3_selfservice_sendlink($params)
       'return'            => 'contact_id'
   ]);
   foreach ($query['values'] as $email) {
-    $contact_ids[] = $email['contact_id'];
+    $contact_ids[$email['contact_id']] = TRUE;
   }
 
   // remove the contacts that are deleted
@@ -47,7 +47,7 @@ function civicrm_api3_selfservice_sendlink($params)
     $query = civicrm_api3('Contact', 'get', [
         'check_permissions' => 0,
         'option.limit'      => 0,
-        'id'                => ['IN' => $contact_ids],
+        'id'                => ['IN' => array_keys($contact_ids)],
         'is_deleted'        => 1,
         'return'            => 'id',
     ]);
@@ -71,7 +71,7 @@ function civicrm_api3_selfservice_sendlink($params)
 
     case 1: // contact known
       if ($template_email_known) {
-        $contact_id = min($contact_ids);
+        $contact_id = min(array_keys($contact_ids));
         civicrm_api3('MessageTemplate', 'send', [
             'check_permissions' => 0,
             'id'                => $template_email_known,
@@ -87,7 +87,7 @@ function civicrm_api3_selfservice_sendlink($params)
     default: // contact ambiguous
       if ($template_email_ambiguous) {
         // we found a contact -> send to the one with the lowest ID
-        $contact_id = min($contact_ids);
+        $contact_id = min(array_keys($contact_ids));
         civicrm_api3('MessageTemplate', 'send', [
             'check_permissions' => 0,
             'id'                => $template_email_ambiguous,
