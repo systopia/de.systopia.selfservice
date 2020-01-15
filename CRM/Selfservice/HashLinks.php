@@ -226,12 +226,12 @@ class CRM_Selfservice_HashLinks {
     }
 
     // load conflict/hash data
-    $conflicted_cids = self::getContactIDsWithSharedEmails($cids);
-    $good_cids = array_diff($cids, $conflicted_cids);
+    $conflicted_cids = self::getContactIDsWithSharedEmails($contact_ids);
+    $good_cids = array_diff($contact_ids, $conflicted_cids);
     $contact_hashes = self::getContactHashes($good_cids);
     $links_by_token  = self::getLinksByTokenName();
 
-    foreach ($cids as $cid) {
+    foreach ($contact_ids as $cid) {
       foreach ($link_tokens_used as $token) {
         $link = $links_by_token[$token];
         if (isset($conflicted_cids[$cid])) {
