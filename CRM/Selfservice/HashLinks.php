@@ -155,8 +155,9 @@ class CRM_Selfservice_HashLinks {
       $email_query->free();
 
       // second round: find duplicates
-      $email_list_string = '"' . implode('","', $email_list) . '"';
-      $duplicates_query = CRM_Core_DAO::executeQuery("
+      if (!empty($email_list)) {
+        $email_list_string = '"' . implode('","', $email_list) . '"';
+        $duplicates_query = CRM_Core_DAO::executeQuery("
         SELECT 
             contact.id  AS contact_id,
             email.email AS email
@@ -164,16 +165,17 @@ class CRM_Selfservice_HashLinks {
         LEFT JOIN civicrm_contact contact ON contact.id = email.contact_id
         WHERE email.email IN ({$email_list_string})
           AND (contact.is_deleted IS NULL OR contact.is_deleted = 0)");
-      while ($duplicates_query->fetch()) {
-        $email_contact_id = CRM_Utils_Array::value($duplicates_query->email, $email_to_contact, NULL);
-        if ($email_contact_id) { // this should always be the case
-          if ($email_contact_id != $duplicates_query->contact_id) {
-            // the email is used with another contact -> conflict
-            $conflicted_contact_ids[$email_contact_id] = $email_contact_id;
+        while ($duplicates_query->fetch()) {
+          $email_contact_id = CRM_Utils_Array::value($duplicates_query->email, $email_to_contact, NULL);
+          if ($email_contact_id) { // this should always be the case
+            if ($email_contact_id != $duplicates_query->contact_id) {
+              // the email is used with another contact -> conflict
+              $conflicted_contact_ids[$email_contact_id] = $email_contact_id;
+            }
           }
         }
+        $duplicates_query->free();
       }
-      $duplicates_query->free();
     }
     return $conflicted_contact_ids;
   }
