@@ -22,7 +22,8 @@
  */
 function civicrm_api3_selfservice_get_hash($params)
 {
-  CRM_Selfservice_Configuration::log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
+  $config = new CRM_Selfservice_Configuration($params['profile'] ?? NULL);
+  $config->log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = (int) $params['contact_id'];
   if (!$contact_id) {
@@ -49,4 +50,10 @@ function _civicrm_api3_selfservice_get_hash_spec(&$params) {
     'api.required'   => 1,
     'title'          => 'Contact ID',
     );
+  $params['profile'] = [
+    'name' => 'profile',
+    'title' => 'Profile name',
+    'default' => 'default',
+    'description' => 'The name of the SendLink configuration profile to use.',
+  ];
 }

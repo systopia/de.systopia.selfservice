@@ -15,14 +15,13 @@
 
 use CRM_Selfservice_ExtensionUtil as E;
 
-/**
- * Form controller class
- *
- * @see https://docs.civicrm.org/dev/en/latest/framework/quickform/
- */
 class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
+
   const HASH_LINK_COUNT = 10;
 
+  /**
+   * {@inheritDoc}
+   */
   public function buildQuickForm() {
     $profiles = [];
     foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
@@ -91,6 +90,9 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     parent::buildQuickForm();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function postProcess()
   {
     $values = $this->exportValues(null, true);
@@ -111,10 +113,6 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     }
     Civi::settings()->set('selfservice_personalised_links', $hash_link_specs);
 
-    // format + store the rest
-    $values['selfservice_link_request_sender'] = html_entity_decode($values['selfservice_link_request_sender']);
-    Civi::settings()->set('selfservice_configuration', $values);
-
     parent::postProcess();
   }
 
@@ -122,6 +120,8 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
    * Get a list of eligible message templates
    *
    * @return array
+   *
+   * @throws \CiviCRM_API3_Exception
    */
   protected function getMessageTemplates() {
     $templates = ['' => E::ts("disabled")];
@@ -136,4 +136,5 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     }
     return $templates;
   }
+
 }
