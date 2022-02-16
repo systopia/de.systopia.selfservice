@@ -13,6 +13,8 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+use Civi\API\Exception\UnauthorizedException;
+
 /**
  * Selfservice.getContact gives you a contact_id for a given hash,
  *  if the hash is still valid.
@@ -22,9 +24,11 @@
  */
 function civicrm_api3_selfservice_get_contact($params)
 {
-  $config = new CRM_Selfservice_Configuration($params['profile'] ?? NULL);
+  $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
   if (!CRM_Core_Permission::check($config->getSetting('permission'))) {
-    return civicrm_api3_create_error('Insufficient permissions.');
+    throw new UnauthorizedException(
+      "API permission check failed for Selfservice/getcontact call; insufficient permission: require {$config->getSetting('permission')}"
+    );
   }
   $config->log("Selfservice.get_contact", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 

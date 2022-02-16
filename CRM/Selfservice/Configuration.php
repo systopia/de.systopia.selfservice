@@ -13,6 +13,7 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Configuration {
 
@@ -23,9 +24,14 @@ class CRM_Selfservice_Configuration {
 
   /**
    * @param string $profile_name
+   *
+   * @throws \Exception
+   *   When no profile with the given name exists.
    */
   public function __construct(string $profile_name = 'default') {
-    $this->config = CRM_Selfservice_SendLinkProfile::getProfile($profile_name);
+    if (!$this->config = CRM_Selfservice_SendLinkProfile::getProfile($profile_name)) {
+      throw new Exception(E::ts('No profile with name %1', [1 => $profile_name]));
+    }
   }
 
   /**
