@@ -23,6 +23,9 @@
 function civicrm_api3_selfservice_get_contact($params)
 {
   $config = new CRM_Selfservice_Configuration($params['profile'] ?? NULL);
+  if (!CRM_Core_Permission::check($config->getSetting('permission'))) {
+    return civicrm_api3_create_error('Insufficient permissions.');
+  }
   $config->log("Selfservice.get_contact", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = CRM_Selfservice_HashLinks::getContactIdFromHash($params['hash']);

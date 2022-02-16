@@ -24,6 +24,9 @@
 function civicrm_api3_selfservice_sendlink($params)
 {
   $config = new CRM_Selfservice_Configuration($params['profile'] ?? NULL);
+  if (!CRM_Core_Permission::check($config->getSetting('permission'))) {
+    return civicrm_api3_create_error('Insufficient permissions.');
+  }
   $config->log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
 
   // get templates
