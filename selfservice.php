@@ -26,6 +26,7 @@ function selfservice_civicrm_container(ContainerBuilder $container) {
   if ( class_exists("Civi\ActionProvider\Action\AbstractAction")
       && class_exists("Civi\Selfservice\ActionProvider\Action\ContactResolve")) {
     $container->addCompilerPass(new Civi\Selfservice\ActionProvider\Action\ContactResolve());
+    $container->addCompilerPass(new Civi\Selfservice\ActionProvider\Action\GetHash());
   }
 }
 
