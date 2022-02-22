@@ -69,7 +69,10 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
    */
   public function getOutputSpecification() {
     return new SpecificationBag([
-      new Specification('contact_id', 'Integer', E::ts('Contact ID'), false, null, null, null, false),
+      new Specification('is_error', 'Integer', E::ts('Is Error'), false, null, null, null, false),
+      new Specification('error_message', 'String', E::ts('Error Message'), false, null, null, null, false),
+      new Specification('count', 'Integer', E::ts('Count'), false, null, null, null, false),
+      new Specification('values', 'String', E::ts('Values'), false, null, null, null, false),
     ]);
   }
 
@@ -87,7 +90,17 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
     $params['check_permissions'] = 0;
 
     // execute
-    $result = \civicrm_api3('Selfservice', 'sendlink', $params);
-    $output->setParameter('contact_id', $result['id']);
+    try {
+        $result = \civicrm_api3('Selfservice', 'sendlink', $params);
+        $output->setParameter('is_error', $result['is_error']);
+        $output->setParameter('error_message', $result['error_message']);
+        $output->setParameter('count', $result['count']);
+        $output->setParameter('values', $result['values']);
+    } catch (\Exception $ex) {
+        $output->setParameter('is_error', 1);
+        $output->setParameter('error_message', $ex->getMessage());
+        $output->setParameter('count', 0);
+        $output->setParameter('count', '');
+    }
   }
 }
