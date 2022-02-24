@@ -48,13 +48,35 @@ function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens =
  * Set permissions for runner/engine API call
  */
 function selfservice_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
-  // We require permissions defined in the default profile here, but these might
-  // be extended by permissions defined in the profile given via parameters.
-  $config = new CRM_Selfservice_Configuration();
-  $selfservice_permissions = [$config->getAPIPermission()];
-  $permissions['selfservice']['sendlink']    = $selfservice_permissions;
-  $permissions['selfservice']['get_contact'] = $selfservice_permissions;
-  $permissions['selfservice']['get_hash']    = $selfservice_permissions;
+  $permissions['selfservice']['sendlink'] = ['selfservice send link ' . ($params['profile'] ?? 'all profiles')];
+  $permissions['selfservice']['get_contact'] = ['selfservice get contact'];
+  $permissions['selfservice']['get_hash'] = ['selfservice get hash'];
+}
+
+/**
+ * Implements hook_civicrm_permission().
+ */
+function selfservice_civicrm_permission(&$permissions) {
+  $permissions['selfservice send link all profiles'] = [
+    E::ts('SelfService: Send Link (all profiles'),
+    E::ts('Selfservice: Access the Selfservice.sendlink API for all profiles'),
+  ];
+  foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $sendlink_profile) {
+    $permissions['selfservice send link ' . $sendlink_profile->getName()] = [
+      E::ts('SelfService: Send Link (%1 profile)', [1 => $sendlink_profile->getName()]),
+      E::ts('Selfservice: Access the Selfservice.sendlink API for the %1 profile', [1 => $sendlink_profile->getName()]),
+    ];
+  }
+
+  $permissions['selfservice get contact'] = [
+    E::ts('SelfService: Get Contact'),
+    E::ts('Selfservice: Access the Selfservice.GetContact API'),
+  ];
+
+  $permissions['selfservice get hash'] = [
+    E::ts('SelfService: Get Hash'),
+    E::ts('Selfservice: Access the Selfservice.GetHash API'),
+  ];
 }
 
 /**

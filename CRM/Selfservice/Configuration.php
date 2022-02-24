@@ -46,14 +46,6 @@ class CRM_Selfservice_Configuration {
   }
 
   /**
-   * Get the permission required to call the API
-   */
-  public function getAPIPermission() {
-    return $this->config->getAttribute('permission', 'access CiviCRM backend and API');
-  }
-
-
-  /**
    * Check if the following log level should be logged:
    *  1 => link requests only
    *  2 => other requests

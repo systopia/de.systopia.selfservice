@@ -31,16 +31,12 @@ class CRM_Selfservice_Upgrader extends CRM_Selfservice_Upgrader_Base {
      $current_values = Civi::settings()->get('selfservice_configuration');
      $migrate_settings = array_fill_keys([
        'log',
-       'permission',
        'template_contact_known',
        'template_contact_unknown',
        'template_contact_ambiguous',
        'sender',
      ], NULL);
      foreach ($migrate_settings as $setting_name => &$setting) {
-       if ($setting_name == 'permission') {
-         $setting_name = 'permissions';
-       }
        $setting = $current_values['selfservice_link_request_' . $setting_name];
      }
      $default_profile = new CRM_Selfservice_SendLinkProfile(

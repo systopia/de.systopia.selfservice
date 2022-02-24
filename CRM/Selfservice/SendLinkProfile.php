@@ -60,7 +60,6 @@ class CRM_Selfservice_SendLinkProfile {
   public static function allowedAttributes(): array {
     return [
       'log',
-      'permission',
       'template_contact_known',
       'template_contact_unknown',
       'template_contact_ambiguous',
@@ -81,7 +80,6 @@ class CRM_Selfservice_SendLinkProfile {
   public static function createDefaultProfile(string $name = 'default'): self {
     return new self($name, [
       'log' => 0,
-      'permission' => NULL,
       'template_contact_known' => NULL,
       'template_contact_unknown' => NULL,
       'template_contact_ambiguous' => NULL,

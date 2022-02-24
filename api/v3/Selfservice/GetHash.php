@@ -25,11 +25,6 @@ use Civi\API\Exception\UnauthorizedException;
 function civicrm_api3_selfservice_get_hash($params)
 {
   $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
-  if (!CRM_Core_Permission::check($config->getSetting('permission'))) {
-    throw new UnauthorizedException(
-      "API permission check failed for Selfservice/gethash call; insufficient permission: require {$config->getSetting('permission')}"
-    );
-  }
   $config->log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = (int) $params['contact_id'];
