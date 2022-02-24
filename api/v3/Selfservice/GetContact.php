@@ -13,8 +13,6 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
-use Civi\API\Exception\UnauthorizedException;
-
 /**
  * Selfservice.getContact gives you a contact_id for a given hash,
  *  if the hash is still valid.
