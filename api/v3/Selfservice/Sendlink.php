@@ -26,11 +26,6 @@ use Civi\API\Exception\UnauthorizedException;
 function civicrm_api3_selfservice_sendlink($params)
 {
   $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
-  if (!CRM_Core_Permission::check($config->getSetting('permission'))) {
-    throw new UnauthorizedException(
-      "API permission check failed for Selfservice/sendlink call; insufficient permission: require {$config->getSetting('permission')}"
-    );
-  }
   $config->log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
 
   // get templates
