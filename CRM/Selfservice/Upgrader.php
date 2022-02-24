@@ -20,6 +20,12 @@ use CRM_Selfservice_ExtensionUtil as E;
  */
 class CRM_Selfservice_Upgrader extends CRM_Selfservice_Upgrader_Base {
 
+  public function uninstall() {
+    Civi::settings()->revert('selfservice_configuration');
+    Civi::settings()->revert('selfservice_sendlink_profiles');
+    Civi::settings()->revert('selfservice_personalised_links');
+  }
+
   /**
    * Example: Run a couple simple queries.
    *
