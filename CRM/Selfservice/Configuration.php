@@ -32,6 +32,7 @@ class CRM_Selfservice_Configuration {
     if (!$this->config = CRM_Selfservice_SendLinkProfile::getProfile($profile_name)) {
       throw new Exception(E::ts('No profile with name %1', [1 => $profile_name]));
     }
+    $this->config += Civi::settings()->get('selfservice_configuration');
   }
 
   /**

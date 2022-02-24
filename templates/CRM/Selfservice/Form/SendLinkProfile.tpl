@@ -22,12 +22,6 @@
       <div class="content">{$form.name.html}</div>
       <div class="clear"></div>
     </div>
-
-    <div class="crm-section">
-      <div class="label">{$form.log.label}</div>
-      <div class="content">{$form.log.html}</div>
-      <div class="clear"></div>
-    </div>
     <div class="crm-section">
       <div class="label">{$form.sender.label}</div>
       <div class="content">{$form.sender.html}</div>

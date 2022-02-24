@@ -23,6 +23,14 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
    * {@inheritDoc}
    */
   public function buildQuickForm() {
+    $this->add(
+      'select',
+      'log',
+      E::ts('Log Requests'),
+      [0 => E::ts("No"), 1 => E::ts("Only Link Requests"), 2 => E::ts("Everything")],
+      FALSE
+    );
+
     $profiles = [];
     foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
       $profiles[$profile_name]['name'] = $profile_name;
@@ -73,6 +81,13 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
         ],
     ]);
 
+    // add basic settings
+    $current_values = Civi::settings()->get('selfservice_configuration');
+    if (is_array($current_values)) {
+      unset($current_values['qfKey'], $current_values['entryURL']);
+      $this->setDefaults($current_values);
+    }
+
     // add hash link specs
     $link_specs = CRM_Selfservice_HashLinks::getLinks();
     foreach (range(1, self::HASH_LINK_COUNT) as $i) {
@@ -112,6 +127,9 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
       unset($values["hash_link_{$i}"], $values["hash_link_name_{$i}"], $values["hash_link_html_{$i}"], $values["hash_link_fallback_html_{$i}"]);
     }
     Civi::settings()->set('selfservice_personalised_links', $hash_link_specs);
+
+    // Store the rest.
+    Civi::settings()->set('selfservice_configuration', $values);
 
     parent::postProcess();
   }

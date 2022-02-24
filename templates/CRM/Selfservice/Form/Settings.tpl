@@ -17,6 +17,12 @@
 
   <h3>{ts}Request New Link (<code>Selfservice.sendlink</code>){/ts}</h3>
 
+  <div class="crm-section">
+    <div class="label">{$form.log.label}</div>
+    <div class="content">{$form.log.html}</div>
+    <div class="clear"></div>
+  </div>
+
       <table>
         <thead>
         <tr>
