@@ -34,7 +34,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     $profiles = [];
     foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
       $profiles[$profile_name]['name'] = $profile_name;
-      foreach (CRM_Twingle_Profile::allowedAttributes() as $attribute) {
+      foreach (CRM_Selfservice_SendLinkProfile::allowedAttributes() as $attribute) {
         $profiles[$profile_name][$attribute] = $profile->getAttribute($attribute);
       }
     }

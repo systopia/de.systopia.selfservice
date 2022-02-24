@@ -68,7 +68,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
           $profile_name = 'default';
           $this->profile = CRM_Selfservice_SendLinkProfile::getProfile($profile_name);
         }
-        CRM_Utils_System::setTitle(E::ts('Edit Twingle API profile <em>%1</em>', [1 => $this->profile->getName()]));
+        CRM_Utils_System::setTitle(E::ts('Edit Selfservice Sendlink profile <em>%1</em>', [1 => $this->profile->getName()]));
         break;
       case 'copy':
         // Retrieve the source profile name.
