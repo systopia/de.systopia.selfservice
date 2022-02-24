@@ -24,7 +24,7 @@ use Civi\API\Exception\UnauthorizedException;
  */
 function civicrm_api3_selfservice_get_hash($params)
 {
-  $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
+  $config = new CRM_Selfservice_Configuration();
   $config->log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = (int) $params['contact_id'];
@@ -52,10 +52,4 @@ function _civicrm_api3_selfservice_get_hash_spec(&$params) {
     'api.required'   => 1,
     'title'          => 'Contact ID',
     );
-  $params['profile'] = [
-    'name' => 'profile',
-    'title' => 'Profile name',
-    'default' => 'default',
-    'description' => 'The name of the SendLink configuration profile to use.',
-  ];
 }
