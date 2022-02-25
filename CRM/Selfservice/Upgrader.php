@@ -53,6 +53,8 @@ class CRM_Selfservice_Upgrader extends CRM_Selfservice_Upgrader_Base {
        'log' => $current_values['selfservice_link_request_log'],
      ];
      Civi::settings()->set('selfservice_configuration', $current_values);
+
+     CRM_Core_Invoke::rebuildMenuAndCaches();
      return TRUE;
    }
 
