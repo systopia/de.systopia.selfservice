@@ -17,7 +17,7 @@ use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Configuration {
 
-  protected ?CRM_Selfservice_SendLinkProfile $config;
+  protected array $config;
 
   const LOG_LINK_REQUESTS_ONLY = 1;
   const LOG_ALL_API            = 2;
@@ -29,10 +29,10 @@ class CRM_Selfservice_Configuration {
    *   When no profile with the given name exists.
    */
   public function __construct(string $profile_name = 'default') {
-    if (!$this->config = CRM_Selfservice_SendLinkProfile::getProfile($profile_name)) {
+    if (!$profile = CRM_Selfservice_SendLinkProfile::getProfile($profile_name)) {
       throw new Exception(E::ts('No profile with name %1', [1 => $profile_name]));
     }
-    $this->config += Civi::settings()->get('selfservice_configuration');
+    $this->config = Civi::settings()->get('selfservice_configuration') + $profile->getData();
   }
 
   /**
@@ -43,7 +43,7 @@ class CRM_Selfservice_Configuration {
    * @return mixed
    */
   public function getSetting($name, $default_value = NULL) {
-    return $this->config->getAttribute($name, $default_value);
+    return CRM_Utils_Array::value($name, $this->config, $default_value);
   }
 
   /**
