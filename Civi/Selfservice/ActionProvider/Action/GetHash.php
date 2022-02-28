@@ -24,7 +24,7 @@ use \Civi\ActionProvider\Parameter\SpecificationBag;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ContactResolve extends AbstractAction implements CompilerPassInterface {
+class GetHash extends AbstractAction implements CompilerPassInterface {
 
   /**
    * Register this one action: SelfServiceResolve
@@ -34,7 +34,7 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
       return;
     }
     $typeFactoryDefinition = $container->getDefinition('action_provider');
-    $typeFactoryDefinition->addMethodCall('addAction', ['SelfServiceResolve', 'Civi\Selfservice\ActionProvider\Action\ContactResolve', E::ts('Resolve Self-Service Token to Contact'), [
+    $typeFactoryDefinition->addMethodCall('addAction', ['GetHash', 'Civi\Selfservice\ActionProvider\Action\GetHash', E::ts('Get Self-Service Token'), [
         AbstractAction::SINGLE_CONTACT_ACTION_TAG,
         AbstractAction::DATA_RETRIEVAL_TAG
     ]]);
@@ -56,7 +56,7 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
    */
   public function getParameterSpecification() {
     return new SpecificationBag([
-        new Specification('hash', 'String', E::ts('Self-Service Token'), false, null, null, null, false),
+        new Specification('contact_id', 'Integer', E::ts('Contact ID'), false, null, null, null, false),
    ]);
   }
 
@@ -69,7 +69,7 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
    */
   public function getOutputSpecification() {
     return new SpecificationBag([
-      new Specification('contact_id', 'Integer', E::ts('Contact ID'), false, null, null, null, false),
+      new Specification('hash', 'String', E::ts('Self-Service Token'), false, null, null, null, false),
     ]);
   }
 
@@ -87,7 +87,7 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
     $params['check_permissions'] = 0;
 
     // execute
-    $result = \civicrm_api3('Selfservice', 'get_contact', $params);
-    $output->setParameter('contact_id', $result['id']);
+    $result = \civicrm_api3('Selfservice', 'get_hash', $params);
+    $output->setParameter('hash', $result['values'][$params['contact_id']]['hash'] );
   }
 }
