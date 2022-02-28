@@ -81,7 +81,11 @@ class CRM_Selfservice_SendLinkProfile {
       'template_contact_known' => NULL,
       'template_contact_unknown' => NULL,
       'template_contact_ambiguous' => NULL,
-      'sender' => CRM_Core_BAO_Domain::getFromEmail(),
+      // TODO: Remove backwards-compatibility soon.
+      //       CRM_Core_BAO_Domain::getFromEmail() is available from 5.44.
+      'sender' => method_exists('CRM_Core_BAO_Domain', 'getFromEmail')
+        ? CRM_Core_BAO_Domain::getFromEmail()
+        : current(CRM_Core_BAO_Domain::getNameAndEmail(FALSE, TRUE)),
     ]);
   }
 
