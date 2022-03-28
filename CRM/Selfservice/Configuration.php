@@ -13,13 +13,27 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Configuration {
 
-  protected static $config = NULL;
+  protected array $config;
 
   const LOG_LINK_REQUESTS_ONLY = 1;
   const LOG_ALL_API            = 2;
+
+  /**
+   * @param string $profile_name
+   *
+   * @throws \Exception
+   *   When no profile with the given name exists.
+   */
+  public function __construct(string $profile_name = 'default') {
+    if (!$profile = CRM_Selfservice_SendLinkProfile::getProfile($profile_name)) {
+      throw new Exception(E::ts('No profile with name %1', [1 => $profile_name]));
+    }
+    $this->config = Civi::settings()->get('selfservice_configuration') + $profile->getData();
+  }
 
   /**
    * Get the given setting
@@ -28,31 +42,9 @@ class CRM_Selfservice_Configuration {
    * @param null $default_value  mixed
    * @return mixed
    */
-  public static function getSetting($name, $default_value = NULL) {
-    // load settings
-    if (self::$config === NULL) {
-      self::$config = Civi::settings()->get('selfservice_configuration');
-      if (self::$config === NULL) {
-        self::$config = []; // avoid re-loading
-      }
-    }
-
-    // return requested value
-    return CRM_Utils_Array::value($name, self::$config, $default_value);
+  public function getSetting($name, $default_value = NULL) {
+    return CRM_Utils_Array::value($name, $this->config, $default_value);
   }
-
-  /**
-   * Get the permission required to call the API
-   */
-  public static function getAPIPermissions() {
-    $permission = self::getSetting('selfservice_link_request_permissions');
-    if ($permission) {
-      return [$permission];
-    } else {
-      return ['access CiviCRM backend and API'];
-    }
-  }
-
 
   /**
    * Check if the following log level should be logged:
@@ -61,8 +53,8 @@ class CRM_Selfservice_Configuration {
    * @param $level integer log level, see constants
    * @return bool true if it should be logged
    */
-  public static function shouldLog($level) {
-    $max_level = (int) self::getSetting('selfservice_link_request_log');
+  public function shouldLog($level) {
+    $max_level = (int) $this->getSetting('log');
     return $level <= $max_level;
   }
 
@@ -73,12 +65,13 @@ class CRM_Selfservice_Configuration {
    * @param $data        mixed   log data
    * @param $log_level   integer log level, see ::shouldLog
    */
-  public static function log($identifier, $data, $log_level) {
-    if (self::shouldLog($log_level)) {
+  public function log($identifier, $data, $log_level) {
+    if ($this->shouldLog($log_level)) {
       if (!is_string($data)) {
         $data = json_encode($data);
       }
       Civi::log()->debug("{$identifier}: {$data}");
     }
   }
+
 }

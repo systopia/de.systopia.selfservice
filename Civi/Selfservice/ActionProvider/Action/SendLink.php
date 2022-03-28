@@ -24,7 +24,7 @@ use \Civi\ActionProvider\Parameter\SpecificationBag;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ContactResolve extends AbstractAction implements CompilerPassInterface {
+class SendLink extends AbstractAction implements CompilerPassInterface {
 
   /**
    * Register this one action: SelfServiceResolve
@@ -34,7 +34,7 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
       return;
     }
     $typeFactoryDefinition = $container->getDefinition('action_provider');
-    $typeFactoryDefinition->addMethodCall('addAction', ['SelfServiceResolve', 'Civi\Selfservice\ActionProvider\Action\ContactResolve', E::ts('Resolve Self-Service Token to Contact'), [
+    $typeFactoryDefinition->addMethodCall('addAction', ['Sendlink', 'Civi\Selfservice\ActionProvider\Action\SendLink', E::ts('Send Self-Service Token to Email-Adress'), [
         AbstractAction::SINGLE_CONTACT_ACTION_TAG,
         AbstractAction::DATA_RETRIEVAL_TAG
     ]]);
@@ -46,7 +46,9 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
    * @return SpecificationBag specs
    */
   public function getConfigurationSpecification() {
-    return new SpecificationBag([]);
+    return new SpecificationBag([
+        new Specification('default_profile', 'String', E::ts('Default Profile'), false, null, null, $this->getProfiles(), false),
+    ]);
   }
 
   /**
@@ -56,7 +58,8 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
    */
   public function getParameterSpecification() {
     return new SpecificationBag([
-        new Specification('hash', 'String', E::ts('Self-Service Token'), false, null, null, null, false),
+        new Specification('email', 'String', E::ts('Email'), false, null, null, null, false),
+        new Specification('profile', 'String', E::ts('Profile'), false, null, null, null, false),
    ]);
   }
 
@@ -69,8 +72,18 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
    */
   public function getOutputSpecification() {
     return new SpecificationBag([
-      new Specification('contact_id', 'Integer', E::ts('Contact ID'), false, null, null, null, false),
+      new Specification('is_error', 'Integer', E::ts('Is Error'), false, null, null, null, false),
+      new Specification('error_message', 'String', E::ts('Error Message'), false, null, null, null, false),
+      new Specification('message', 'String', E::ts('Message'), false, null, null, null, false),
     ]);
+  }
+
+  protected function getProfiles(){
+    $profiles = [];
+    foreach (\CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
+        $profiles[$profile_name] = $profile_name;
+    }
+    return $profiles;
   }
 
   /**
@@ -86,8 +99,25 @@ class ContactResolve extends AbstractAction implements CompilerPassInterface {
     $params = $parameters->toArray();
     $params['check_permissions'] = 0;
 
+
+    $profile = $parameters->getParameter("profile");
+    if (empty($profile)){
+        $profile = $parameters->getParameter("default_profile");
+    }
+    if(!empty($profile)){
+        $params['profile']=$profile;
+    }
+
     // execute
-    $result = \civicrm_api3('Selfservice', 'get_contact', $params);
-    $output->setParameter('contact_id', $result['id']);
+    try {
+        $result = \civicrm_api3('Selfservice', 'sendlink', $params);
+        $output->setParameter('is_error', $result['is_error']);
+        $output->setParameter('error_message', $result['error_message']);
+        $output->setParameter('message', $result['values']);
+    } catch (\Exception $ex) {
+        $output->setParameter('is_error', 1);
+        $output->setParameter('error_message', $ex->getMessage());
+        $output->setParameter('message', '');
+    }
   }
 }

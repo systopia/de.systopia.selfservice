@@ -15,59 +15,31 @@
 
 use CRM_Selfservice_ExtensionUtil as E;
 
-/**
- * Form controller class
- *
- * @see https://docs.civicrm.org/dev/en/latest/framework/quickform/
- */
 class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
+
   const HASH_LINK_COUNT = 10;
 
+  /**
+   * {@inheritDoc}
+   */
   public function buildQuickForm() {
-    // Configuration Self-Service link request
     $this->add(
-        'select',
-        'selfservice_link_request_log',
-        E::ts('Log Requests'),
-        [0 => E::ts("No"), 1 => E::ts("Only Link Requests"), 2 => E::ts("Everything")],
-        FALSE
+      'select',
+      'log',
+      E::ts('Log Requests'),
+      [0 => E::ts("No"), 1 => E::ts("Only Link Requests"), 2 => E::ts("Everything")],
+      FALSE
     );
-    $this->add(
-        'select',
-        'selfservice_link_request_permissions',
-        E::ts('Permission'),
-        ['' => E::ts("only: 'access CiviCRM backend and API'")] + CRM_Core_Permission::basicPermissions(),
-        FALSE
-    );
-    $templates = $this->getMessageTemplates();
-    $this->add(
-        'select',
-        'selfservice_link_request_template_contact_known',
-        E::ts('E-Mail Template for Case: Email is <i>known</i>'),
-        $templates,
-        FALSE
-    );
-    $this->add(
-        'select',
-        'selfservice_link_request_template_contact_unknown',
-        E::ts('E-Mail Template for Case: Email is <i>not known</i>'),
-        $templates,
-        FALSE
-    );
-    $this->add(
-        'select',
-        'selfservice_link_request_template_contact_ambiguous',
-        E::ts('E-Mail Template for Case: Email is <i>ambiguous</i>'),
-        $templates,
-        FALSE
-    );
-    $this->add(
-        'text',
-        'selfservice_link_request_sender',
-        E::ts('Sender E-Mail'),
-        ['class' => 'huge'],
-        TRUE
-    );
+
+    $profiles = [];
+    foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
+      $profiles[$profile_name]['name'] = $profile_name;
+      foreach (CRM_Selfservice_SendLinkProfile::allowedAttributes() as $attribute) {
+        $profiles[$profile_name][$attribute] = $profile->getAttribute($attribute);
+      }
+    }
+    $this->assign('sendlink_profiles', $profiles);
+    CRM_Core_Resources::singleton()->addScriptFile('civicrm', 'js/crm.livePage.js', 1, 'html-header');
 
     // Configuration for hash links (personalised links)
     $hash_link_ids = range(1, self::HASH_LINK_COUNT);
@@ -133,6 +105,9 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     parent::buildQuickForm();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function postProcess()
   {
     $values = $this->exportValues(null, true);
@@ -153,8 +128,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     }
     Civi::settings()->set('selfservice_personalised_links', $hash_link_specs);
 
-    // format + store the rest
-    $values['selfservice_link_request_sender'] = html_entity_decode($values['selfservice_link_request_sender']);
+    // Store the rest.
     Civi::settings()->set('selfservice_configuration', $values);
 
     parent::postProcess();
@@ -164,6 +138,8 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
    * Get a list of eligible message templates
    *
    * @return array
+   *
+   * @throws \CiviCRM_API3_Exception
    */
   protected function getMessageTemplates() {
     $templates = ['' => E::ts("disabled")];
@@ -178,4 +154,5 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     }
     return $templates;
   }
+
 }

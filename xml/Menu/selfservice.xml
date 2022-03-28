@@ -10,4 +10,10 @@
     <icon>admin/small/online_contribution_pages.png</icon>
     <weight>100</weight>
   </item>
+  <item>
+    <path>civicrm/admin/selfservice/profile</path>
+    <page_callback>CRM_Selfservice_Form_SendLinkProfile</page_callback>
+    <title>SendLink Profile</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
 </menu>

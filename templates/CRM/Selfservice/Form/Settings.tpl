@@ -12,41 +12,65 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*}
 
-<br/>
-<h3>{ts domain="de.systopia.selfservice"}Request New Link (<code>Selfservice.sendlink</code>){/ts}</h3>
-<div class="crm-section">
-  <div class="label">{$form.selfservice_link_request_log.label}</div>
-  <div class="content">{$form.selfservice_link_request_log.html}</div>
-  <div class="clear"></div>
-</div>
-<div class="crm-section">
-  <div class="label">{$form.selfservice_link_request_permissions.label}</div>
-  <div class="content">{$form.selfservice_link_request_permissions.html}</div>
-  <div class="clear"></div>
-</div>
-<div class="crm-section">
-    <div class="label">{$form.selfservice_link_request_sender.label}</div>
-    <div class="content">{$form.selfservice_link_request_sender.html}</div>
+{crmScope extensionKey='de.systopia.selfservice'}
+<div class="crm-block crm-content-block crm-selfservice-content-block">
+
+  <h3>{ts}Request New Link (<code>Selfservice.sendlink</code>){/ts}</h3>
+
+  <div class="crm-section">
+    <div class="label">{$form.log.label}</div>
+    <div class="content">{$form.log.html}</div>
     <div class="clear"></div>
-</div>
-<div class="crm-section">
-    <div class="label">{$form.selfservice_link_request_template_contact_known.label}</div>
-    <div class="content">{$form.selfservice_link_request_template_contact_known.html}</div>
-    <div class="clear"></div>
-</div>
-<div class="crm-section">
-    <div class="label">{$form.selfservice_link_request_template_contact_unknown.label}</div>
-    <div class="content">{$form.selfservice_link_request_template_contact_unknown.html}</div>
-    <div class="clear"></div>
-</div>
-<div class="crm-section">
-    <div class="label">{$form.selfservice_link_request_template_contact_ambiguous.label}</div>
-    <div class="content">{$form.selfservice_link_request_template_contact_ambiguous.html}</div>
-    <div class="clear"></div>
+  </div>
+
+      <table>
+        <thead>
+        <tr>
+          <th>{ts}Profile name{/ts}</th>
+          <th>{ts}Operations{/ts}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if !empty($sendlink_profiles)}
+          {foreach from=$sendlink_profiles item=profile}
+              {assign var="profile_name" value=$profile.name}
+            <tr>
+              <td>{$profile.name}</td>
+              <td>
+                <a
+                        class="action-item button crm-popup crm-small-popup"
+                        href="{crmURL p="civicrm/admin/selfservice/profile" q="op=edit&name=$profile_name"}"
+                        title="{ts 1=$profile.name}Edit profile %1{/ts}"
+                >{ts}Edit{/ts}</a>
+                <a
+                        class="action-item button crm-popup crm-small-popup"
+                        href="{crmURL p="civicrm/admin/selfservice/profile" q="op=copy&source_name=$profile_name"}"
+                        title="{ts 1=$profile.name}Copy profile %1{/ts}"
+                >{ts}Copy{/ts}</a>
+                  {if $profile_name == 'default'}
+                    <a
+                            class="action-item button crm-popup crm-small-popup"
+                            href="{crmURL p="civicrm/admin/selfservice/profile" q="op=delete&name=$profile_name"}"
+                            title="{ts 1=$profile.name}Reset profile %1{/ts}"
+                    >{ts}Reset{/ts}</a>
+                  {else}
+                    <a
+                            class="action-item button crm-popup crm-small-popup"
+                            href="{crmURL p="civicrm/admin/selfservice/profile" q="op=delete&name=$profile_name"}"
+                            title="{ts 1=$profile.name}Delete profile %1{/ts}"
+                    >{ts}Delete{/ts}</a>
+                  {/if}
+
+              </td>
+            </tr>
+          {/foreach}
+        {/if}
+        </tbody>
+      </table>
+
 </div>
 
 
-<br/>
 <h3>{ts domain="de.systopia.selfservice"}Personalised Links (Hash Links){/ts}</h3>
 <div id="help">{ts domain="de.systopia.selfservice"}You can use this function to generate tokens that contain a personalised link for contacts. This identifies the contact in an secure and anonymous way in any interaction with your website. However, since the personalised link would be sent out by email, this link can cause havoc if received by multiple contacts sharing the same email address. To avoid this, the token will be replaced with the fallback value below in that scenario.{/ts}</div>
 {foreach from=$hash_links item=hash_link_index}
@@ -120,3 +144,4 @@
     });
   </script>
 {/literal}
+{/crmScope}

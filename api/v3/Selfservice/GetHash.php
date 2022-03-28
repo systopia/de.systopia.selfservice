@@ -22,7 +22,8 @@
  */
 function civicrm_api3_selfservice_get_hash($params)
 {
-  CRM_Selfservice_Configuration::log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
+  $config = new CRM_Selfservice_Configuration();
+  $config->log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = (int) $params['contact_id'];
   if (!$contact_id) {

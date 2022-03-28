@@ -13,6 +13,8 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+use Civi\API\Exception\UnauthorizedException;
+
 /**
  * Process Selfservice.sendlink
  *
@@ -23,12 +25,13 @@
  */
 function civicrm_api3_selfservice_sendlink($params)
 {
-  CRM_Selfservice_Configuration::log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
+  $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
+  $config->log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
 
   // get templates
-  $template_email_known     = (int) CRM_Selfservice_Configuration::getSetting('selfservice_link_request_template_contact_known');
-  $template_email_unknown   = (int) CRM_Selfservice_Configuration::getSetting('selfservice_link_request_template_contact_unknown');
-  $template_email_ambiguous = (int) CRM_Selfservice_Configuration::getSetting('selfservice_link_request_template_contact_ambiguous');
+  $template_email_known     = (int) $config->getSetting('template_contact_known');
+  $template_email_unknown   = (int) $config->getSetting('template_contact_unknown');
+  $template_email_ambiguous = (int) $config->getSetting('template_contact_ambiguous');
 
   // find contact ids for the given email
   $contact_ids = [];
@@ -62,7 +65,7 @@ function civicrm_api3_selfservice_sendlink($params)
         civicrm_api3('MessageTemplate', 'send', [
             'check_permissions' => 0,
             'id'                => $template_email_unknown,
-            'from'              => CRM_Selfservice_Configuration::getSetting('selfservice_link_request_sender'),
+            'from'              => $config->getSetting('sender'),
             'to_email'          => trim($params['email']),
         ]);
         return civicrm_api3_create_success("email sent");
@@ -76,7 +79,7 @@ function civicrm_api3_selfservice_sendlink($params)
             'check_permissions' => 0,
             'id'                => $template_email_known,
             'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
-            'from'              => CRM_Selfservice_Configuration::getSetting('selfservice_link_request_sender'),
+            'from'              => $config->getSetting('sender'),
             'contact_id'        => $contact_id,
             'to_email'          => trim($params['email']),
         ]);
@@ -92,7 +95,7 @@ function civicrm_api3_selfservice_sendlink($params)
             'check_permissions' => 0,
             'id'                => $template_email_ambiguous,
             'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
-            'from'              => CRM_Selfservice_Configuration::getSetting('selfservice_link_request_sender'),
+            'from'              => $config->getSetting('sender'),
             'contact_id'        => $contact_id,
             'to_email'          => trim($params['email']),
         ]);
@@ -103,7 +106,7 @@ function civicrm_api3_selfservice_sendlink($params)
 
   // no template set for this case -> do nothing
   Civi::log()->debug("Selfservice.sendlink requested but not enabled. Configure the templates");
-  civicrm_api3_create_error("disabled");
+  return civicrm_api3_create_error("disabled");
 }
 
 /**
@@ -119,4 +122,10 @@ function _civicrm_api3_selfservice_sendlink_spec(&$params) {
     'api.required'   => 1,
     'title'          => 'email address',
     );
+  $params['profile'] = [
+    'name' => 'profile',
+    'title' => 'Profile name',
+    'default' => 'default',
+    'description' => 'The name of the SendLink configuration profile to use.',
+  ];
 }
