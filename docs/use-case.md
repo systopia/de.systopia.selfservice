@@ -30,21 +30,17 @@ Clicking the links opens webform (A) which is prefilled with the data of the cor
 
 ## Configurations
 
-
-
-### Formprocessor (D)
-
-### Webform (A)
-
 ### Message templates
 
 Configure message template for the emails that will be sent to the member of your organisation in case their email address can be identified or not.
 
-This could be examples for two message templates:
+This could be an example for the message template that is sent if the contact can be uniquely identified:
 
-![Message Template E-Mail Identified](../img/selfservice-template-email-identified.png)
+![Message Template E-Mail Identified](./img/selfservice-template-email-identified.png)
 
-![Message Template E-Mail Not Identified](../img/selfservice-template-email-not-identified.png)
+This could be an example for the message template that is sent if no contact exists in CiviCRM or the email address exists for different contacts:
+
+![Message Template E-Mail Not Identified](./img/selfservice-template-email-not-identified.png)
 
 The token `{PersonalisedLink.link_webformA}` does not exist yet and will be configured in the next step.
 
@@ -59,11 +55,11 @@ In the profiles you define which messages should be sent in the case that
 * the email address can not be found in CiviCRM
 * there exist several contacts with this email address in CiviCRM
 
-![Profile](../img/selfservice-profile.png)
+![Profile](./img/selfserive-profile.png)
 
 Additionaly you need to define the token which is used in the message template for the first case. It is defined under **Personalised Link #1** and looks for example like this:
 
-![Personalized Link](../img/selfserive-personalized-link.png)
+![Personalized Link](./img/selfserive-personalized-link.png)
 
 The value of `{hash}` will be replaced by the selfserive extension and is unique for every contact.
 
@@ -75,19 +71,23 @@ The formprocessor should include all fields that you plan to show in Webform (A)
 
 Additionally, you should open the tab **Retrieval of defaults**, enable it and enter a retrieval criterium  `selfservice`, where the generated token of the selfservice extension can be entered.
 
-![Retrieval Criterium](../img/selfserive-personalized-link.png)
+![Retrieval Criterium](./img/selfserive-personalized-link.png)
 
 In the section **Retrieval methods of default data**, you need to first get the Contact ID out of the selfservice token:
 
-![Get Contact ID](../img/selfservice-retrtieval-method-getContactId.png)
+![Get Contact ID](./img/selfservice-retrtieval-method-getContactId.png)
 
 You might add further retrieval methods. If you want to get contact data and membership data, you need to get the contact and membership:
 
-![Get Contact](../img/selfservice-retrtieval-method-getContact.png)
+![Get Contact](./img/selfservice-retrtieval-method-getContact.png)
 
 Now, you are ready to configure the defaults in the last section.
 
 The configuration differs slightly depending on the webform being on a Drupal 7 or Drupal 9 instance. The following example refers to a Drupal 9 webform.
+
+### Formprocessor (D)
+
+### Webform (A)
 
 ### CMRF
 
@@ -141,7 +141,7 @@ $rest_allowed_actions = [
       ],
       'formprocessor_B' => [
         '*' => 'string',
-      ],  
+      ],
     ],
     'FormProcessorDefaults' => [
       'getfields' => [
