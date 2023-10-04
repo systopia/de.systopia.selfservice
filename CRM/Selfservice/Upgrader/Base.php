@@ -8,6 +8,8 @@ use CRM_Selfservice_ExtensionUtil as E;
  */
 class CRM_Selfservice_Upgrader_Base {
 
+  private $queue;
+
   /**
    * @var CRM_Selfservice_Upgrader_Base
    */
