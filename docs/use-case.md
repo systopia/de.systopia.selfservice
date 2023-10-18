@@ -20,9 +20,9 @@ If everything is configured as described below, a member of your organization wo
 
 They would go to your website to change their data and be directed to webform (B). After entering their email-address, they would get an email describing the next steps.
 
-- If the email address can not be found in CiviCRM, they will get a message telling them that what to do in this case. The template of this message can be specified at ...
-- If there exist several contacts with this email address in CiviCRM, they will get a message telling them what to do in this case. They will not be able to view / update any data of any found contact. The template of this message can be specified at ....
-- If there exists a unique contact with this email address in CiviCRM, the message contains a link, for example https://myPublicDrupalInstance/webformA?selfservicetoken=31_907c4cba9129a85d35d327a8ca66ae8e_1695130674_168 . The template of this message and form of the link can be specified at ...
+- If the email address can not be found in CiviCRM, they will get a message telling them that what to do in this case. For example, this message could contain an explanation how to become a member of your organization or contain a link to a registration form. They will not be able to view / update any data.
+- If there exist several contacts with this email address in CiviCRM, they will get a message telling them what to do in this case. For example write an email to _info@myOrganisatizon_ because there is an unforseen problem with this email address. They will not be able to view / update any data of any found contact.
+- If there exists a unique contact with this email address in CiviCRM, the message contains a link, for example https://myPublicDrupalInstance/webformA?selfservicetoken=31_907c4cba9129a85d35d327a8ca66ae8e_1695130674_168 .
 
 The link in the email contains a token which is created by the selfservice extension and cannot be guessed by external parties.
 
@@ -38,13 +38,15 @@ This could be an example for the message template that is sent if the contact ca
 
 ![Message Template E-Mail Identified](./img/selfservice-template-email-identified.png)
 
+
+The token `{PersonalisedLink.link_webformA}` does not exist yet and will be configured in the next step.
+
 This could be an example for the message template that is sent if no contact exists in CiviCRM or the email address exists for different contacts:
 
 ![Message Template E-Mail Not Identified](./img/selfservice-template-email-not-identified.png)
 
-The token `{PersonalisedLink.link_webformA}` does not exist yet and will be configured in the next step.
 
-### Selfservice extension
+### Configuration of the Selfservice extension
 
 Go to `civicrm/admin/selfservice` and define a new profile or configure the default profile.
 
@@ -83,11 +85,7 @@ You might add further retrieval methods. If you want to get contact data and mem
 
 Now, you are ready to configure the defaults in the last section.
 
-The configuration differs slightly depending on the webform being on a Drupal 7 or Drupal 9 instance. The following example refers to a Drupal 9 webform.
-
 ### Formprocessor (D)
-
-### Webform (A)
 
 ### CMRF
 
@@ -109,8 +107,18 @@ In short, you have to go through the following steps
   - Insert the API Key you just created. There should exist exactly one user with an API key. (TODO: Is this correct?)
 - Define connectors for formprocessor (C) formprocessor (D) at `admin/config/cmrf/connectors`
 
-
 ### Webform (B)
+
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. The email address field you defined in Formprocessor (C) should be available for selection. After being selected, the field is  available in your form. Change the layout of the form to your liking.
+
+### Webform (A)
+
+Proceed similarly as for Webform (B):
+
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (D)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (D) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
+
+Additionally, go to the end of the **Advanced** tab of the hanlder. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
+
 ### Optional: CiviProxy
 
 These configurations are only necessary, if your CiviCRM is behind a VPN and you have a separate proxy server which is configured as described in the [CiviProxy Documentation](https://docs.civicrm.org/civiproxy/en/latest/).
@@ -160,3 +168,13 @@ $rest_allowed_actions = [
 ];
 ```
 *TODO: I don't know if this is a minimal example, for example if Contact and RemoteContact actions really are necessary.*
+
+## Test your Configuration
+
+There are several intermediate steps permitting you to test your configuration.
+
+After having created the form processors, you can try them out within CiviCRM without needing to configure CiviMRF or creating the webforms. Go to **Administer → Automation → Form processors**. Next to every form processor, you can click on **try out**.
+
+If you try out Formprocessor (D), an email should be sent. If you have configured the outbound mail of your system to write into the database, you will find the email under **Mailings → Archived Mailings**. Choose **Public View** to see the link for Webform (A) including the selfservice hash.
+
+To try out Formprocessor (C), you need to know the selfservice hash. If you haven't configured Formprocessor (D) yet, you can find the selfservice hash with APIv3 - choose **Selfserive** as entity and **get_action** as action.

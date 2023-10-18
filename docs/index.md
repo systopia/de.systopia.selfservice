@@ -8,4 +8,4 @@ webform will be sent to that email address if and only if the email address exis
 
 **This documentation is a first draft and not complete.** Some screenshots are not (yet) compatible to each other. You are highly welcome to contribute corrections or additional chapters.
 
-This documentation refers to version 1.0-beta1 of SelfService.
+This documentation refers to version 1.0-beta1 of SelfService. The described configurations of the webforms are referring to a Drupal 9 instance.
