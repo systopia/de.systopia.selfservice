@@ -14,6 +14,13 @@ To configure this setup, you need the following components:
 
 **Note**: The Drupal instance containing the webform doesn't need to be identical to the Drupal instance containing CiviCRM. If your CiviCRM is protected via VPN, you can use CiviRemote to allow communication between the webform (which would be on a publicy available Drupal instance) and CiviCRM.
 
+This is a scheme to demonstrate the workflow of the extension:
+
+![Scheme send email](./img/selfservice-scheme-send-email.png)
+
+![Scheme update data](./img/selfservice-scheme-update-data.png)
+_Blue: Drupal level, Yellow: CiviCRM level, White: Manual interaction_
+
 ## User experience
 
 If everything is configured as described below, a member of your organization would proceed as follows:
@@ -87,7 +94,9 @@ Now, you are ready to configure the defaults in the last section.
 
 ### Formprocessor (D)
 
-### CMRF
+
+
+### CiviMRF
 
 In the Drupal instance of your webform, you need to install and configure the CiviMRF extension. A documentation including a helpful [use case](https://docs.civicrm.org/formprocessor/en/latest/sign-up-newsletter) can be found [here](https://docs.civicrm.org/formprocessor/en/latest/).
 
@@ -96,26 +105,26 @@ In short, you have to go through the following steps
 - Make a Backup of your Drupal instance
 - Install the Drupal Webform module
 - Install the [CiviMRF Core module](https://github.com/CiviMRF/cmrf_core)
-- Enable the modules **CiviMRF Core**, **CiviMRF Call Report**, **CiviMRF Webform**, **CiviMRF Views** (???) and **CMRF Form Processor** at `admin/modules`
+- Enable the modules **CiviMRF Core**, **CiviMRF Call Report**, **CiviMRF Webform** and **CMRF Form Processor** at `admin/modules`
 - Define an API Key
-  - Create a new role **API user** in Drupal with the additonal permissions **CiviCRM: Zugriff auf CiviCRM-Backend und -API** and all permissions related to the selfservice extension (TODO: Is this Correct?)
+  - Create a new role **API user** in Drupal with the additonal permissions **CiviCRM: Zugriff auf CiviCRM-Backend und -API** and all permissions related to the selfservice extension
   - Create a new user **API user** in Drupal and assign the **API user** role
   - [Assign an API key](https://docs.civicrm.org/sysadmin/en/latest/setup/api-keys/) to the **API user**
 - Define a profile at `admin/config/cmrf/profiles`
   - The [Site Key](https://docs.civicrm.org/sysadmin/en/latest/setup/secret-keys/) can be found in your `civicrm.settings.php`
   - The URL is something of the form `https://myCiviCRMWebsite/civicrm/ajax/rest`
-  - Insert the API Key you just created. There should exist exactly one user with an API key. (TODO: Is this correct?)
-- Define connectors for formprocessor (C) formprocessor (D) at `admin/config/cmrf/connectors`
+  - Insert the API Key you just created.
+- Define connectors for formprocessor (C) and formprocessor (D) at `admin/config/cmrf/connectors`
 
 ### Webform (B)
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. The email address field you defined in Formprocessor (C) should be available for selection. After being selected, the field is  available in your form. Change the layout of the form to your liking.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (D)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. The email address field you defined in Formprocessor (D) should be available for selection. After being selected, the field is  available in your form. Change the layout of the form to your liking.
 
 ### Webform (A)
 
 Proceed similarly as for Webform (B):
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (D)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (D) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
 
 Additionally, go to the end of the **Advanced** tab of the hanlder. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
 
@@ -178,3 +187,5 @@ After having created the form processors, you can try them out within CiviCRM wi
 If you try out Formprocessor (D), an email should be sent. If you have configured the outbound mail of your system to write into the database, you will find the email under **Mailings → Archived Mailings**. Choose **Public View** to see the link for Webform (A) including the selfservice hash.
 
 To try out Formprocessor (C), you need to know the selfservice hash. If you haven't configured Formprocessor (D) yet, you can find the selfservice hash with APIv3 - choose **Selfserive** as entity and **get_action** as action.
+
+If the formprocessor works but you have trouble with the webform, it can be helpful to look at the CiviMRF calls at `admin/reports/cmrfcalls`.
