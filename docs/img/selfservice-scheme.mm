@@ -82,7 +82,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node TEXT="Enter email&#xa;address" STYLE_REF="Automatischer Prozess" ID="ID_315789229" CREATED="1697636598516" MODIFIED="1697637776347" BACKGROUND_COLOR="#ffffff" STYLE="bubble">
 <edge STYLE="bezier"/>
@@ -160,7 +159,7 @@
 </node>
 <node TEXT="Open Webform with&#xa;prefilled data" POSITION="right" ID="ID_1400766296" CREATED="1697636981696" MODIFIED="1697637032330">
 <node TEXT="Open link containing&#xa;the selfservice hash" LOCALIZED_STYLE_REF="defaultstyle.floating" ID="ID_1631013222" CREATED="1692282076383" MODIFIED="1697637032325" BACKGROUND_COLOR="#ffffff" STYLE="bubble" HGAP_QUANTITY="72.4999982565642 pt" VSHIFT_QUANTITY="-27.749999172985582 pt">
-<node STYLE_REF="Automatischer Prozess" ID="ID_1159334986" CREATED="1692285880006" MODIFIED="1697637596545" BACKGROUND_COLOR="#ffffcc" STYLE="bubble"><richcontent TYPE="NODE">
+<node STYLE_REF="Automatischer Prozess" ID="ID_1159334986" CREATED="1692285880006" MODIFIED="1697702447478" BACKGROUND_COLOR="#ffffcc" STYLE="bubble"><richcontent TYPE="NODE">
 
 <html>
   <head>
@@ -168,7 +167,11 @@
   </head>
   <body>
     <p>
-      <b>Formprocessor (C)</b><br/>
+      <b>Formprocessor (C) </b>
+    </p>
+    <p>
+      <br/>
+      
     </p>
     <p>
       Retrieval auf defaults via<br/>identification of contact<br/>belonging to the hash
@@ -220,7 +223,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>

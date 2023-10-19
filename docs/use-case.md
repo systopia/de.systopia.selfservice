@@ -19,6 +19,7 @@ This is a scheme to demonstrate the workflow of the extension:
 ![Scheme send email](./img/selfservice-scheme-send-email.png)
 
 ![Scheme update data](./img/selfservice-scheme-update-data.png)
+
 _Blue: Drupal level, Yellow: CiviCRM level, White: Manual interaction_
 
 ## User experience
@@ -45,12 +46,15 @@ This could be an example for the message template that is sent if the contact ca
 
 ![Message Template E-Mail Identified](./img/selfservice-template-email-identified.png)
 
-
 The token `{PersonalisedLink.link_webformA}` does not exist yet and will be configured in the next step.
 
-This could be an example for the message template that is sent if no contact exists in CiviCRM or the email address exists for different contacts:
+This could be an example for the message template that is sent if no contact exists in CiviCRM:
 
-![Message Template E-Mail Not Identified](./img/selfservice-template-email-not-identified.png)
+![Message Template E-Mail Unknown](./img/selfservice-template-email-unknown.png)
+
+and this is an example for the message templet if the email address exists for different contacts:
+
+![Message Template E-Mail Ambiguous](./img/selfservice-template-email-ambiguous.png)
 
 
 ### Configuration of the Selfservice extension
