@@ -8,6 +8,8 @@ use CRM_Selfservice_ExtensionUtil as E;
  */
 class CRM_Selfservice_Upgrader_Base {
 
+  private $queue;
+
   /**
    * @var CRM_Selfservice_Upgrader_Base
    */
@@ -294,7 +296,7 @@ class CRM_Selfservice_Upgrader_Base {
       $setting = new CRM_Core_BAO_Setting();
       $setting->name = $this->extensionName . ':version';
       $setting->delete();
-      CRM_Core_Error::debug_log_message("Migrated extension schema revision ID for {$this->extensionName} from civicrm_setting (deprecated) to civicrm_extension.\n");
+      Civi::log()->debug("Migrated extension schema revision ID for {$this->extensionName} from civicrm_setting (deprecated) to civicrm_extension.\n");
     }
   }
 
