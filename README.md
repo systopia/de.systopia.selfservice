@@ -1,44 +1,27 @@
 # de.systopia.selfservice
 
-![Screenshot](/images/screenshot.png)
+## Introduction
 
-(*FIXME: In one or two paragraphs, describe what the extension does and why one would download it. *)
+With this extension you can give constituents access to their CiviCRM data without them needing a Drupal account.
 
-The extension is licensed under [AGPL-3.0](LICENSE.txt).
+This extension has been created with the following use case in mind:
+Let people read and change their contact data in a drupal webform. To access the data, people need to enter their email address. A link to the prefilled
+webform will be sent to that email address if and only if the email address exists within CiviCRM.
 
-## Requirements
+## We need your support
 
-* PHP v7.0+
-* CiviCRM (*FIXME: Version number*)
+This CiviCRM extension is provided as Free and Open Source Software, and we are happy if you find it useful. However, we have put a lot of work into it (and continue to do so), much of it unpaid for. So if you benefit from our software, please consider making a financial contribution so we can continue to maintain and develop it further.
 
-## Installation (Web UI)
+If you are willing to support us in developing this CiviCRM extension, please send an email to info@systopia.de to get an invoice or agree a different payment method. Thank you!
 
-This extension has not yet been published for installation via the web UI.
+## Documentation
 
-## Installation (CLI, Zip)
+We are currently working on writing a documentation. It is not officially released yet, but you can find the corresponding files in the `docs` folder.
 
-Sysadmins and developers may download the `.zip` file for this extension and
-install it with the command-line tool [cv](https://github.com/civicrm/cv).
+This is a scheme to demonstrate the workflow of the extension. It is explained in more detail in the documentation.
 
-```bash
-cd <extension-dir>
-cv dl de.systopia.selfservice@https://github.com/FIXME/de.systopia.selfservice/archive/master.zip
-```
+![Scheme send email](./docs/img/selfservice-scheme-send-email.png)
 
-## Installation (CLI, Git)
+![Scheme update data](./docs/img/selfservice-scheme-update-data.png)
 
-Sysadmins and developers may clone the [Git](https://en.wikipedia.org/wiki/Git) repo for this extension and
-install it with the command-line tool [cv](https://github.com/civicrm/cv).
-
-```bash
-git clone https://github.com/FIXME/de.systopia.selfservice.git
-cv en selfservice
-```
-
-## Usage
-
-(* FIXME: Where would a new user navigate to get started? What changes would they see? *)
-
-## Known Issues
-
-(* FIXME *)
+_Blue: Drupal level, Yellow: CiviCRM level, White: Manual interaction_
