@@ -34,9 +34,9 @@ They would go to your website to change their data and be directed to webform (B
 - If there exist several contacts with this email address in CiviCRM, they will get a message telling them what to do in this case. For example write an email to _info@myOrganisatizon_ because there is an unforseen problem with this email address. They will not be able to view / update any data of any found contact.
 - If there exists a unique contact with this email address in CiviCRM, the message contains a link, for example [https://myPublicDrupalInstance/webformA?selfservicetoken=31_907c4cba9129a85d35d327a8ca66ae8e_1695130674_168]().
 
-The link in the email contains a token which is created by the selfservice extension and cannot be guessed by external parties.
+The link in the email contains a token which is created by the selfservice extension and cannot be guessed by external parties. The link is valid for a fixed amount of time, the default is seven days.
 
-Clicking the links opens webform (A) which is prefilled with the data of the corresponding contact in CiviCRM. If the webform is configured accordingly, your member can not only view the existing data but also change the data. Submitting the form will send the data to CiviCRM. You can configure in formprocessor (C) what exactly should happen with the submitted data and if someone of your organization should be informed about the change.
+Clicking the link opens webform (A) which is prefilled with the data of the corresponding contact in CiviCRM. If the webform is configured accordingly, your member can not only view the existing data but also change the data. Submitting the form will send the data to CiviCRM. You can configure in formprocessor (C) what exactly should happen with the submitted data and if someone of your organization should be informed about the change.
 
 ## Configurations
 
@@ -54,7 +54,7 @@ This could be an example for the message template that is sent if no contact exi
 
 ![Message Template E-Mail Unknown](./img/selfservice-template-email-unknown.png)
 
-and this is an example for the message templet if the email address exists for different contacts:
+and this is an example for the message template if the email address exists for different contacts:
 
 ![Message Template E-Mail Ambiguous](./img/selfservice-template-email-ambiguous.png)
 
@@ -99,9 +99,11 @@ You might add further retrieval methods. If you want to get contact data and mem
 
 Now, you are ready to configure the defaults in the last section.
 
+*TODO: Add description how to configure the defaults of Formprocessor (C)*
+
 ### Formprocessor (D)
 
-
+*TODO: Add description how to configure Formprocessor (D)*
 
 ### CiviMRF
 
@@ -114,13 +116,13 @@ In short, you have to go through the following steps
 - Install the [CiviMRF Core module](https://github.com/CiviMRF/cmrf_core)
 - Enable the modules **CiviMRF Core**, **CiviMRF Call Report**, **CiviMRF Webform** and **CMRF Form Processor** at `admin/modules`
 - Define an API Key
-  - Create a new role **API user** in Drupal with the additonal permissions **CiviCRM: Zugriff auf CiviCRM-Backend und -API** and all permissions related to the selfservice extension
-  - Create a new user **API user** in Drupal and assign the **API user** role
-  - [Assign an API key](https://docs.civicrm.org/sysadmin/en/latest/setup/api-keys/) to the **API user**
+      - Create a new role **API user** in Drupal with the additonal permissions **CiviCRM: Zugriff auf CiviCRM-Backend und -API** and all permissions related to the selfservice extension
+      - Create a new user **API user** in Drupal and assign the **API user** role
+      - [Assign an API key](https://docs.civicrm.org/sysadmin/en/latest/setup/api-keys/) to the **API user**
 - Define a profile at `admin/config/cmrf/profiles`
-  - The [Site Key](https://docs.civicrm.org/sysadmin/en/latest/setup/secret-keys/) can be found in your `civicrm.settings.php`
-  - The URL is something of the form `https://myCiviCRMWebsite/civicrm/ajax/rest`
-  - Insert the API Key you just created.
+      - The [Site Key](https://docs.civicrm.org/sysadmin/en/latest/setup/secret-keys/) can be found in your `civicrm.settings.php`
+      - The URL is something of the form `https://myCiviCRMWebsite/civicrm/ajax/rest`
+      - Insert the API Key you just created.
 - Define connectors for formprocessor (C) and formprocessor (D) at `admin/config/cmrf/connectors`
 
 ### Webform (B)
