@@ -4,6 +4,8 @@ This extension is best described in a use case. Suppose your organization has me
 
 However, you don't want to create an account in Drupal and/or CiviCRM for every member of your organization. This is where the selfservice extension comes into play.
 
+## Components
+
 To configure this setup, you need the following components:
 
 - (A) A Drupal Webform which serves as online formular to show / update contact information
@@ -12,14 +14,14 @@ To configure this setup, you need the following components:
 - (D) A formprocessor that interacts with the webform (B)
 - (E) The Drupal module CMRF to make the interaction between formprocessors and drupal webform possible
 
-**Note**: The Drupal instance containing the webform doesn't need to be identical to the Drupal instance containing CiviCRM. If your CiviCRM is protected via VPN, you can use CiviRemote to allow communication between the webform (which would be on a publicy available Drupal instance) and CiviCRM.
+!!! note
+    The Drupal instance containing the webform doesn't need to be identical to the Drupal instance containing CiviCRM. If your CiviCRM is protected via VPN, you can use CiviRemote to allow communication between the webform (which would be on a publicy available Drupal instance) and CiviCRM.
 
 This is a scheme to demonstrate the workflow of the extension:
 
 ![Scheme send email](./img/selfservice-scheme-send-email.png)
 
 ![Scheme update data](./img/selfservice-scheme-update-data.png)
-
 _Blue: Drupal level, Yellow: CiviCRM level, White: Manual interaction_
 
 ## User experience
@@ -30,7 +32,7 @@ They would go to your website to change their data and be directed to webform (B
 
 - If the email address can not be found in CiviCRM, they will get a message telling them that what to do in this case. For example, this message could contain an explanation how to become a member of your organization or contain a link to a registration form. They will not be able to view / update any data.
 - If there exist several contacts with this email address in CiviCRM, they will get a message telling them what to do in this case. For example write an email to _info@myOrganisatizon_ because there is an unforseen problem with this email address. They will not be able to view / update any data of any found contact.
-- If there exists a unique contact with this email address in CiviCRM, the message contains a link, for example https://myPublicDrupalInstance/webformA?selfservicetoken=31_907c4cba9129a85d35d327a8ca66ae8e_1695130674_168 .
+- If there exists a unique contact with this email address in CiviCRM, the message contains a link, for example [https://myPublicDrupalInstance/webformA?selfservicetoken=31_907c4cba9129a85d35d327a8ca66ae8e_1695130674_168]().
 
 The link in the email contains a token which is created by the selfservice extension and cannot be guessed by external parties.
 
@@ -57,13 +59,14 @@ and this is an example for the message templet if the email address exists for d
 ![Message Template E-Mail Ambiguous](./img/selfservice-template-email-ambiguous.png)
 
 
-### Configuration of the Selfservice extension
+### Selfservice extension
 
 Go to `civicrm/admin/selfservice` and define a new profile or configure the default profile.
 
 If you plan to use the selfservice extension for several webforms (for example a form to change membership data for individuals and a different form to change membership data for organizations) you should configure different profiles for each of them.
 
 In the profiles you define which messages should be sent in the case that
+
 * there exists a unique contact with this email address
 * the email address can not be found in CiviCRM
 * there exist several contacts with this email address in CiviCRM
@@ -122,15 +125,15 @@ In short, you have to go through the following steps
 
 ### Webform (B)
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (D)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. The email address field you defined in Formprocessor (D) should be available for selection. After being selected, the field is  available in your form. Change the layout of the form to your liking.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (D)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. The email address field you defined in Formprocessor (D) should be available for selection. After being selected, the field is  available in your form. Change the layout of the form to your liking.
 
 ### Webform (A)
 
 Proceed similarly as for Webform (B):
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** ad a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
 
-Additionally, go to the end of the **Advanced** tab of the hanlder. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
+Additionally, go to the end of the **Advanced** tab of the handler. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
 
 ### Optional: CiviProxy
 
