@@ -123,7 +123,7 @@ In short, you have to go through the following steps
       - The [Site Key](https://docs.civicrm.org/sysadmin/en/latest/setup/secret-keys/) can be found in your `civicrm.settings.php`
       - The URL is something of the form `https://myCiviCRMWebsite/civicrm/ajax/rest`
       - Insert the API Key you just created.
-- Define connectors for formprocessor (C) and formprocessor (D) at `admin/config/cmrf/connectors`
+- Define a connector for the form processors at `admin/config/cmrf/connectors`. Set `cmrf_form_processor` as **Connecting module**.
 
 ### Webform (B)
 
@@ -133,7 +133,8 @@ Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handle
 
 Proceed similarly as for Webform (B):
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Under **Advanced** click on **Enable the CMFR Form Processor handler**. All fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Selet the tab **Advanced** and click on **Enable the CMFR Form Processor handler**.
+Edit the handler again. Now you will find more options in the tab **Advanced**. Choose, when the data should be sent to CiviCRM. Additionally, all fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
 
 Additionally, go to the end of the **Advanced** tab of the handler. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
 
