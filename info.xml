@@ -2,7 +2,7 @@
 <extension key="de.systopia.selfservice" type="module">
   <file>selfservice</file>
   <name>Self-Service</name>
-  <description>Infrastructure for personalised and self-service forms</description>
+  <description>Infrastructure for personalised and selfservice forms</description>
   <license>AGPL-3.0</license>
   <maintainer>
     <author>B. Endres</author>
