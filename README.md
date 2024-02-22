@@ -16,7 +16,7 @@ If you are willing to support us in developing this CiviCRM extension, please se
 
 ## Documentation
 
-We are currently working on writing a documentation. It is not officially released yet, but you can find the corresponding files in the `docs` folder.
+The documentation for this extension can be found [here](https://docs.civicrm.org/selfservice/en).
 
 This is a scheme to demonstrate the workflow of the extension. It is explained in more detail in the documentation.
 
