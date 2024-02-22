@@ -101,9 +101,15 @@ Now, you are ready to configure the defaults in the last section.
 
 *TODO: Add description how to configure the defaults of Formprocessor (C)*
 
+### Extended Contact Manager (XCM)
+
+The extension [Extended Contact Manager](https://docs.civicrm.org/xcm/en/latest/) is used to identify the CiviCRM contact from a given email address. It needs to be installed and a profile needs to be configured.
+
 ### Formprocessor (D)
 
-*TODO: Add description how to configure Formprocessor (D)*
+For the formprocessor that asks for the email address, you can use  the action **Send Self-Service Token to Email-Adress**. The previously defined xcm profile is needed for the configuration of this action.
+
+![Configurations Formprocessor D](./img/selfservice-formprocessor-D.png)
 
 ### CiviMRF
 
@@ -133,7 +139,7 @@ Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handle
 
 Proceed similarly as for Webform (B):
 
-Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Selet the tab **Advanced** and click on **Enable the CMFR Form Processor handler**.
+Create a new Webform in Drupal. At **Settings → Emails/Handlers** add a handler **CMFR Form Processor**. Choose **FormProcessor** as the Connector and  **Formprocessor (C)** from the Form Processor dropdown list. Select the tab **Advanced** and click on **Enable the CMFR Form Processor handler**.
 Edit the handler again. Now you will find more options in the tab **Advanced**. Choose, when the data should be sent to CiviCRM. Additionally, all fields you defined in Formprocessor (C) should be available for selection. They are then available in your form and you can change the layout of the form to your liking.
 
 Additionally, go to the end of the **Advanced** tab of the handler. There you can find a section **Parameters**. From the dropdown options for **selfservice** you should choose **Url**.
