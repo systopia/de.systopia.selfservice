@@ -1,6 +1,6 @@
 # Use Case
 
-This extension is best described in a use case. Suppose your organization has members and you want to allow your members to get access to their personal data via an online formular. Your members shall be able to see and update some of the data that is stored in CiviCRM in their corresponding contact, i.e. their name, address and membership status.
+This extension is best described in a use case. Suppose your organization has members and you want to allow your members to get access to their personal data via an online formular. Your members shall be able to see and update some of the data that is stored in CiviCRM in their corresponding contact, i.e. their name, address and telephone number.
 
 However, you don't want to create an account in Drupal and/or CiviCRM for every member of your organization. This is where the selfservice extension comes into play.
 
@@ -63,7 +63,7 @@ and this is an example for the message template if the email address exists for 
 
 Go to `civicrm/admin/selfservice` and define a new profile or configure the default profile.
 
-If you plan to use the selfservice extension for several webforms (for example a form to change membership data for individuals and a different form to change membership data for organizations) you should configure different profiles for each of them.
+If you plan to use the selfservice extension for several webforms you should configure different profiles for each of them.
 
 In the profiles you define which messages should be sent in the case that
 
@@ -83,23 +83,19 @@ For every webform you need to define a different personalised link.
 
 ### Formprocessor (C)
 
-The formprocessor should include all fields that you plan to show in Webform (A). In our example, these are fields for the name, address and membership status.
+The formprocessor should include all fields that you plan to show in Webform (A).
 
 Additionally, you should open the tab **Retrieval of defaults**, enable it and enter a retrieval criterium  `selfservice`, where the generated token of the selfservice extension can be entered.
 
-![Retrieval Criterium](./img/selfserive-personalized-link.png)
+This screenshot shows an example:
 
-In the section **Retrieval methods of default data**, you need to first get the Contact ID out of the selfservice token:
+![Retrieval auf defaults](./img/selfservice-retrieval-defaults.png)
+
+You need the action **Resolve Self-Service Token to Contact** to get the Contact ID out of the selfservice token:
 
 ![Get Contact ID](./img/selfservice-retrtieval-method-getContactId.png)
 
-You might add further retrieval methods. If you want to get contact data and membership data, you need to get the contact and membership:
-
-![Get Contact](./img/selfservice-retrtieval-method-getContact.png)
-
-Now, you are ready to configure the defaults in the last section.
-
-*TODO: Add description how to configure the defaults of Formprocessor (C)*
+You might add further retrieval methods. Afterward, you are ready to configure the defaults in the last section.
 
 ### Extended Contact Manager (XCM)
 
