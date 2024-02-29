@@ -99,13 +99,9 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
     $params = $parameters->toArray();
     $params['check_permissions'] = 0;
 
-
-    $profile = $parameters->getParameter("profile");
-    if (empty($profile)){
-        $profile = $parameters->getParameter("default_profile");
-    }
-    if(!empty($profile)){
-        $params['profile']=$profile;
+    // set default if no profile was passed
+    if (empty($params['profile'])) {
+      $params['profile'] = $parameters->getParameter("default_profile");
     }
 
     // execute
