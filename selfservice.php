@@ -59,31 +59,31 @@ function selfservice_civicrm_alterAPIPermissions($entity, $action, &$params, &$p
  */
 function selfservice_civicrm_permission(&$permissions) {
   $permissions['selfservice send link all profiles'] = [
-    E::ts('SelfService: Send Link (all profiles'),
-    E::ts('Selfservice: Access the Selfservice.sendlink API for all profiles'),
+    'label' => E::ts('SelfService: Send Link (all profiles'),
+    'description' => E::ts('Selfservice: Access the Selfservice.sendlink API for all profiles'),
   ];
   foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $sendlink_profile) {
     $permissions['selfservice send link ' . $sendlink_profile->getName()] = [
-      E::ts('SelfService: Send Link (%1 profile)', [1 => $sendlink_profile->getName()]),
-      E::ts('Selfservice: Access the Selfservice.sendlink API for the %1 profile', [1 => $sendlink_profile->getName()]),
+      'label' => E::ts('SelfService: Send Link (%1 profile)', [1 => $sendlink_profile->getName()]),
+      'description' => E::ts('Selfservice: Access the Selfservice.sendlink API for the %1 profile', [1 => $sendlink_profile->getName()]),
     ];
   }
 
   $permissions['selfservice get contact'] = [
-    E::ts('SelfService: Get Contact'),
-    E::ts('Selfservice: Access the Selfservice.GetContact API'),
+    'label' => E::ts('SelfService: Get Contact'),
+    'description' => E::ts('Selfservice: Access the Selfservice.GetContact API'),
   ];
 
   $permissions['selfservice get hash'] = [
-    E::ts('SelfService: Get Hash'),
-    E::ts('Selfservice: Access the Selfservice.GetHash API'),
+    'label' => E::ts('SelfService: Get Hash'),
+    'description' => E::ts('Selfservice: Access the Selfservice.GetHash API'),
   ];
 }
 
 /**
  * Implements hook_civicrm_config().
  *
- * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config/ 
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config/
  */
 function selfservice_civicrm_config(&$config) {
   _selfservice_civix_civicrm_config($config);
