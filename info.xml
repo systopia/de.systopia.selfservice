@@ -18,7 +18,7 @@
   <version>1.0-dev</version>
   <develStage>dev</develStage>
   <compatibility>
-    <ver>5.0</ver>
+    <ver>5.38</ver>
   </compatibility>
   <comments>This module is going back to efforts with AIVL and ProVeg</comments>
   <classloader>
@@ -27,9 +27,11 @@
   </classloader>
   <civix>
     <namespace>CRM/Selfservice</namespace>
-    <format>22.10.0</format>
+    <format>23.02.1</format>
   </civix>
   <mixins>
     <mixin>menu-xml@1.0.0</mixin>
+    <mixin>smarty-v2@1.0.1</mixin>
   </mixins>
+  <upgrader>CRM_Selfservice_Upgrader</upgrader>
 </extension>

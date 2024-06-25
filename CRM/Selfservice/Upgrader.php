@@ -18,7 +18,7 @@ use CRM_Selfservice_ExtensionUtil as E;
 /**
  * Collection of upgrade steps.
  */
-class CRM_Selfservice_Upgrader extends CRM_Selfservice_Upgrader_Base {
+class CRM_Selfservice_Upgrader extends CRM_Extension_Upgrader_Base {
 
   public function uninstall() {
     Civi::settings()->revert('selfservice_configuration');
