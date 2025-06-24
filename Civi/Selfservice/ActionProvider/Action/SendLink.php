@@ -34,10 +34,18 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
       return;
     }
     $typeFactoryDefinition = $container->getDefinition('action_provider');
-    $typeFactoryDefinition->addMethodCall('addAction', ['Sendlink', 'Civi\Selfservice\ActionProvider\Action\SendLink', E::ts('Send Self-Service Token to Email-Adress'), [
-        AbstractAction::SINGLE_CONTACT_ACTION_TAG,
-        AbstractAction::DATA_RETRIEVAL_TAG
-    ]]);
+    $typeFactoryDefinition->addMethodCall(
+      'addAction',
+      [
+        'Sendlink',
+        \Civi\Selfservice\ActionProvider\Action\SendLink::class,
+        E::ts('Send Self-Service Token to Email-Adress'),
+        [
+          AbstractAction::SINGLE_CONTACT_ACTION_TAG,
+          AbstractAction::DATA_RETRIEVAL_TAG,
+        ],
+      ]
+    );
   }
 
   /**
@@ -46,9 +54,28 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
    * @return SpecificationBag specs
    */
   public function getConfigurationSpecification() {
-    return new SpecificationBag([
-        new Specification('default_profile', 'String', E::ts('Default Profile'), false, null, null, $this->getProfiles(), false),
-    ]);
+    return new SpecificationBag(
+      [
+        new Specification(
+          'default_profile',
+          'String',
+          E::ts('Default Profile'),
+          FALSE,
+          NULL,
+          NULL,
+          $this->getProfiles(),
+          FALSE
+        ),
+      ]
+    );
+  }
+
+  protected function getProfiles() {
+    $profiles = [];
+    foreach (\CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
+      $profiles[$profile_name] = $profile_name;
+    }
+    return $profiles;
   }
 
   /**
@@ -57,10 +84,30 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
    * @return SpecificationBag specs
    */
   public function getParameterSpecification() {
-    return new SpecificationBag([
-        new Specification('email', 'String', E::ts('Email'), false, null, null, null, false),
-        new Specification('profile', 'String', E::ts('Profile'), false, null, null, null, false),
-   ]);
+    return new SpecificationBag(
+      [
+        new Specification(
+          'email',
+          'String',
+          E::ts('Email'),
+          FALSE,
+          NULL,
+          NULL,
+          NULL,
+          FALSE
+        ),
+        new Specification(
+          'profile',
+          'String',
+          E::ts('Profile'),
+          FALSE,
+          NULL,
+          NULL,
+          NULL,
+          FALSE
+        ),
+      ]
+    );
   }
 
   /**
@@ -71,19 +118,40 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
    * @return SpecificationBag specs
    */
   public function getOutputSpecification() {
-    return new SpecificationBag([
-      new Specification('is_error', 'Integer', E::ts('Is Error'), false, null, null, null, false),
-      new Specification('error_message', 'String', E::ts('Error Message'), false, null, null, null, false),
-      new Specification('message', 'String', E::ts('Message'), false, null, null, null, false),
-    ]);
-  }
-
-  protected function getProfiles(){
-    $profiles = [];
-    foreach (\CRM_Selfservice_SendLinkProfile::getProfiles() as $profile_name => $profile) {
-        $profiles[$profile_name] = $profile_name;
-    }
-    return $profiles;
+    return new SpecificationBag(
+      [
+        new Specification(
+          'is_error',
+          'Integer',
+          E::ts('Is Error'),
+          FALSE,
+          NULL,
+          NULL,
+          NULL,
+          FALSE
+        ),
+        new Specification(
+          'error_message',
+          'String',
+          E::ts('Error Message'),
+          FALSE,
+          NULL,
+          NULL,
+          NULL,
+          FALSE
+        ),
+        new Specification(
+          'message',
+          'String',
+          E::ts('Message'),
+          FALSE,
+          NULL,
+          NULL,
+          NULL,
+          FALSE
+        ),
+      ]
+    );
   }
 
   /**
@@ -92,32 +160,34 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
    * @param ParameterBagInterface $parameters
    *   The parameters to this action.
    * @param ParameterBagInterface $output
-   * 	 The parameters this action can send back
+   *   The parameters this action can send back
+   *
    * @return void
    */
   protected function doAction(ParameterBagInterface $parameters, ParameterBagInterface $output) {
     $params = $parameters->toArray();
     $params['check_permissions'] = 0;
 
-
-    $profile = $parameters->getParameter("profile");
-    if (empty($profile)){
-        $profile = $parameters->getParameter("default_profile");
+    $profile = $parameters->getParameter('profile');
+    if (empty($profile)) {
+      $profile = $this->getConfiguration()->getParameter('default_profile');
     }
-    if(!empty($profile)){
-        $params['profile']=$profile;
+    if (!empty($profile)) {
+      $params['profile'] = $profile;
     }
 
     // execute
     try {
-        $result = \civicrm_api3('Selfservice', 'sendlink', $params);
-        $output->setParameter('is_error', $result['is_error']);
-        $output->setParameter('error_message', $result['error_message']);
-        $output->setParameter('message', $result['values']);
-    } catch (\Exception $ex) {
-        $output->setParameter('is_error', 1);
-        $output->setParameter('error_message', $ex->getMessage());
-        $output->setParameter('message', '');
+      $result = \civicrm_api3('Selfservice', 'sendlink', $params);
+      $output->setParameter('is_error', $result['is_error']);
+      $output->setParameter('error_message', $result['error_message']);
+      $output->setParameter('message', $result['values']);
+    }
+    catch (\Exception $ex) {
+      $output->setParameter('is_error', 1);
+      $output->setParameter('error_message', $ex->getMessage());
+      $output->setParameter('message', '');
     }
   }
+
 }
