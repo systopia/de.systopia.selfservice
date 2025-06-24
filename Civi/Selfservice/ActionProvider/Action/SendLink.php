@@ -102,7 +102,7 @@ class SendLink extends AbstractAction implements CompilerPassInterface {
 
     $profile = $parameters->getParameter("profile");
     if (empty($profile)){
-        $profile = $parameters->getParameter("default_profile");
+        $profile = $this->getConfiguration()->getParameter('default_profile');
     }
     if(!empty($profile)){
         $params['profile']=$profile;
