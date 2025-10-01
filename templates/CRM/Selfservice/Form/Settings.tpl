@@ -40,24 +40,24 @@
                 <a
                         class="action-item button crm-popup crm-small-popup"
                         href="{crmURL p="civicrm/admin/selfservice/profile" q="op=edit&name=$profile_name"}"
-                        title="{ts 1=$profile.name}Edit profile %1{/ts}"
+                        title="{ts escape='htmlattribute' 1=$profile.name}Edit profile %1{/ts}"
                 >{ts}Edit{/ts}</a>
                 <a
                         class="action-item button crm-popup crm-small-popup"
                         href="{crmURL p="civicrm/admin/selfservice/profile" q="op=copy&source_name=$profile_name"}"
-                        title="{ts 1=$profile.name}Copy profile %1{/ts}"
+                        title="{ts escape='htmlattribute' 1=$profile.name}Copy profile %1{/ts}"
                 >{ts}Copy{/ts}</a>
                   {if $profile_name == 'default'}
                     <a
                             class="action-item button crm-popup crm-small-popup"
                             href="{crmURL p="civicrm/admin/selfservice/profile" q="op=delete&name=$profile_name"}"
-                            title="{ts 1=$profile.name}Reset profile %1{/ts}"
+                            title="{ts escape='htmlattribute' 1=$profile.name}Reset profile %1{/ts}"
                     >{ts}Reset{/ts}</a>
                   {else}
                     <a
                             class="action-item button crm-popup crm-small-popup"
                             href="{crmURL p="civicrm/admin/selfservice/profile" q="op=delete&name=$profile_name"}"
-                            title="{ts 1=$profile.name}Delete profile %1{/ts}"
+                            title="{ts escape='htmlattribute' 1=$profile.name}Delete profile %1{/ts}"
                     >{ts}Delete{/ts}</a>
                   {/if}
 
