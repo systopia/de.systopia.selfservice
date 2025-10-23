@@ -139,7 +139,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
    *
    * @return array
    *
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   protected function getMessageTemplates() {
     $templates = ['' => E::ts("disabled")];
