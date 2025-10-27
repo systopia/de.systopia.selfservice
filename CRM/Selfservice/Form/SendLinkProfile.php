@@ -241,7 +241,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
    * Get a list of eligible message templates
    *
    * @return array
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   protected function getMessageTemplates(): array {
     $templates = ['' => E::ts("disabled")];
