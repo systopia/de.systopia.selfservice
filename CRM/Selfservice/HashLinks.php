@@ -166,7 +166,7 @@ class CRM_Selfservice_HashLinks {
         WHERE email.email IN ({$email_list_string})
           AND (contact.is_deleted IS NULL OR contact.is_deleted = 0)");
         while ($duplicates_query->fetch()) {
-          $email_contact_id = CRM_Utils_Array::value($duplicates_query->email, $email_to_contact, NULL);
+          $email_contact_id = $email_to_contact[$duplicates_query->email] ?? NULL;
           if ($email_contact_id) { // this should always be the case
             if ($email_contact_id != $duplicates_query->contact_id) {
               // the email is used with another contact -> conflict
