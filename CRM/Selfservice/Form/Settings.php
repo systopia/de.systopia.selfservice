@@ -59,6 +59,12 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
           E::ts('Token Label'),
           ['class' => 'big']
       );
+        $this->add(
+            'text',
+            "hash_link_lifetime_{$i}",
+            E::ts('Token Lifetime'),
+            ['class' => 'big']
+        );
       $this->add(
           'textarea',
           "hash_link_html_{$i}",
@@ -96,6 +102,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
         $this->setDefaults([
             "hash_link_{$i}"               => CRM_Utils_Array::value('name', $spec, ''),
             "hash_link_name_{$i}"          => CRM_Utils_Array::value('label', $spec, ''),
+            "hash_link_lifetime_{$i}"      => CRM_Utils_Array::value('lifetime', $spec, ''),
             "hash_link_html_{$i}"          => CRM_Utils_Array::value('link_html', $spec, ''),
             "hash_link_fallback_html_{$i}" => CRM_Utils_Array::value('fallback_html', $spec, ''),
         ]);
@@ -120,6 +127,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
         $hash_link_specs[] = [
             'name'          => $values["hash_link_{$i}"],
             'label'         => CRM_Utils_Array::value("hash_link_name_{$i}", $values, $values["hash_link_{$i}"]),
+            'lifetime'      => $values["hash_link_lifetime_{$i}"],
             'link_html'     => html_entity_decode($values["hash_link_html_{$i}"]),
             'fallback_html' => html_entity_decode($values["hash_link_fallback_html_{$i}"])
         ];

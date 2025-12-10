@@ -89,6 +89,12 @@
       <div class="clear"></div>
     </div>
     <div class="crm-section crm-pv-hashlink-spec">
+      {capture assign=field_name}hash_link_lifetime_{$hash_link_index}{/capture}
+      <div class="label">{$form.$field_name.label}</div>
+      <div class="content">{$form.$field_name.html}</div>
+      <div class="clear"></div>
+    </div>
+    <div class="crm-section crm-pv-hashlink-spec">
       {capture assign=field_name}hash_link_html_{$hash_link_index}{/capture}
       <div class="label">{$form.$field_name.label}</div>
       <div class="content">{$form.$field_name.html}</div>
