@@ -62,7 +62,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
         $this->add(
             'text',
             "hash_link_lifetime_{$i}",
-            E::ts('Token Lifetime'),
+            E::ts('Token Lifetime (Days)'),
             ['class' => 'big']
         );
       $this->add(

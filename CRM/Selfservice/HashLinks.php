@@ -76,10 +76,13 @@ class CRM_Selfservice_HashLinks {
   /**
    * Load the hash for all given contacts
    * @param $contact_id integer contact ID
+   * @param int|null $lifetime lifetime in days
    * @return string hash
+   * @throws CRM_Core_Exception
    */
-  public static function getContactHash($contact_id) {
-    return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id);
+  public static function getContactHash($contact_id, int $lifetime = NULL) {
+    // $lifetime in generateChecksum needs to be in hours, extension configures it in days
+    return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id, NULL, $lifetime * 24);
   }
 
   /**
@@ -123,7 +126,7 @@ class CRM_Selfservice_HashLinks {
       // first: get the emails from the given contacts
       $contact_id_list = implode(',', $contact_ids);
       $email_query = CRM_Core_DAO::executeQuery("
-        SELECT 
+        SELECT
             contact.id    AS contact_id,
             main.email    AS primary_email,
             bulk.email    AS bulk_email
@@ -158,7 +161,7 @@ class CRM_Selfservice_HashLinks {
       if (!empty($email_list)) {
         $email_list_string = '"' . implode('","', $email_list) . '"';
         $duplicates_query = CRM_Core_DAO::executeQuery("
-        SELECT 
+        SELECT
             contact.id  AS contact_id,
             email.email AS email
         FROM civicrm_email email
@@ -228,7 +231,7 @@ class CRM_Selfservice_HashLinks {
     // load conflict/hash data
     $conflicted_cids = self::getContactIDsWithSharedEmails($contact_ids);
     $good_cids = array_diff($contact_ids, $conflicted_cids);
-    $contact_hashes = self::getContactHashes($good_cids);
+//    $contact_hashes = self::getContactHashes($good_cids);
     $links_by_token  = self::getLinksByTokenName();
 
     foreach ($contact_ids as $cid) {
@@ -238,8 +241,15 @@ class CRM_Selfservice_HashLinks {
           // this is a conflict -> set the fallback text
           $values[$cid][self::PERSONALISED_LINKS. ".{$token}"] = $link['fallback_html'];
         } else {
+          // TODO add parameter to getContactHash and use $link['lifetime'] for number of days if set
+          if (isset($link['lifetime'])) {
+            $lifetime = $link['lifetime'];
+          } else {
+            $lifetime = NULL;
+          }
+          $contact_hash = self::getContactHash($cid, $lifetime);
           // all good -> set the link text
-          $values[$cid][self::PERSONALISED_LINKS . ".{$token}"] = preg_replace('/\{hash\}/', $contact_hashes[$cid], $link['link_html']);
+          $values[$cid][self::PERSONALISED_LINKS . ".{$token}"] = preg_replace('/\{hash\}/', $contact_hash, $link['link_html']);
         }
       }
     }
