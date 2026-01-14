@@ -80,9 +80,14 @@ class CRM_Selfservice_HashLinks {
    * @return string hash
    * @throws CRM_Core_Exception
    */
-  public static function getContactHash($contact_id, int $lifetime = NULL) {
+  public static function getContactHash($contact_id, $lifetime = NULL) {
     // $lifetime in generateChecksum needs to be in hours, extension configures it in days
-    return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id, NULL, $lifetime * 24);
+    if (is_null($lifetime)) {
+      return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id);
+    } else {
+      return "{$contact_id}_" . CRM_Contact_BAO_Contact_Utils::generateChecksum($contact_id, NULL, (int) $lifetime * 24);
+    }
+
   }
 
   /**
