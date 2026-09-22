@@ -217,7 +217,7 @@ class CRM_Selfservice_SendLinkProfile {
    */
   public function setAttribute(string $attribute_name, $value) {
     if (!in_array($attribute_name, self::allowedAttributes())) {
-      throw new Exception(E::ts('Unknown attribute %1.', array(1 => $attribute_name)));
+      throw new Exception(E::ts('Unknown attribute %1.', [1 => $attribute_name]));
     }
     // TODO: Check if value is acceptable.
     $this->data[$attribute_name] = $value;
