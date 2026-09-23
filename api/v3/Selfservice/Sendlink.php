@@ -117,11 +117,11 @@ function civicrm_api3_selfservice_sendlink($params)
  */
 function _civicrm_api3_selfservice_sendlink_spec(&$params) {
   // CONTACT BASE
-  $params['email'] = array(
+  $params['email'] = [
     'name'           => 'email',
     'api.required'   => 1,
     'title'          => 'email address',
-    );
+    ];
   $params['profile'] = [
     'name' => 'profile',
     'title' => 'Profile name',

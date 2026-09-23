@@ -41,7 +41,7 @@ function selfservice_civicrm_tokens( &$tokens ) {
 /**
  * Hook implementation: New Tokens
  */
-function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = array(), $context = null) {
+function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = [], $context = null) {
   CRM_Selfservice_HashLinks::tokenValues($values, $cids, $job, $tokens, $context);
 }
 

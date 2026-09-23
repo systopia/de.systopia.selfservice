@@ -201,7 +201,7 @@ class CRM_Selfservice_HashLinks {
    *
    * @see https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_tokenValues
    */
-  public static function tokenValues(&$values, $cids, $job = null, $tokens = array(), $context = null) {
+  public static function tokenValues(&$values, $cids, $job = null, $tokens = [], $context = null) {
     // get normalise $link_tokens_used
     $link_tokens_used = CRM_Utils_Array::value(self::PERSONALISED_LINKS, $tokens, []);
     if (!isset($link_tokens_used[0])) $link_tokens_used = array_keys($link_tokens_used);
@@ -217,7 +217,7 @@ class CRM_Selfservice_HashLinks {
     if (is_string($cids)) {
       $contact_ids = explode(',', $cids);
     } elseif (isset($cids['contact_id'])) {
-      $contact_ids = array($cids['contact_id']);
+      $contact_ids = [$cids['contact_id']];
     } elseif (is_array($cids)) {
       $contact_ids = $cids;
     } else {

@@ -45,9 +45,9 @@ function civicrm_api3_selfservice_get_hash($params)
  * @param array $params array or parameters determined by getfields
  */
 function _civicrm_api3_selfservice_get_hash_spec(&$params) {
-  $params['contact_id'] = array(
+  $params['contact_id'] = [
     'name'           => 'contact_id',
     'api.required'   => 1,
     'title'          => 'Contact ID',
-    );
+    ];
 }
