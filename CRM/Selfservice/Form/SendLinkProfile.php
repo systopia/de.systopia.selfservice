@@ -13,12 +13,14 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
 
   /**
-   * @var CRM_Selfservice_SendLinkProfile $profile
+   * @var CRM_Selfservice_SendLinkProfile
    *   The profile object the form is acting on.
    */
   protected ?CRM_Selfservice_SendLinkProfile $profile;
@@ -50,7 +52,9 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
     switch ($this->_op) {
       case 'delete':
         if ($profile_name) {
-          $title = $profile_name == 'default' ? E::ts('Reset SelfService SendLink default profile to factory defaults') : E::ts('Delete SelfService SendLink profile "%1"', [1 => $profile_name]);
+          $title = $profile_name == 'default'
+            ? E::ts('Reset SelfService SendLink default profile to factory defaults')
+            : E::ts('Delete SelfService SendLink profile "%1"', [1 => $profile_name]);
           CRM_Utils_System::setTitle($title);
           $this->addButtons([
             [
@@ -62,14 +66,19 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
         }
         parent::buildQuickForm();
         return;
+
       case 'edit':
         // When editing without a valid profile name, edit the default profile.
         if (!$profile_name) {
           $profile_name = 'default';
           $this->profile = CRM_Selfservice_SendLinkProfile::getProfile($profile_name);
         }
-        CRM_Utils_System::setTitle(E::ts('Edit Selfservice Sendlink profile <em>%1</em>', [1 => $this->profile->getName()]));
+        CRM_Utils_System::setTitle(E::ts(
+          'Edit Selfservice Sendlink profile <em>%1</em>',
+          [1 => $this->profile->getName()]
+        ));
         break;
+
       case 'copy':
         // Retrieve the source profile name.
         $profile_name = CRM_Utils_Request::retrieve('source_name', 'String', $this);
@@ -84,6 +93,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
         $this->profile->setName($profile_name);
         CRM_Utils_System::setTitle(E::ts('New SelfService SendLink profile'));
         break;
+
       case 'create':
         // Load factory default profile values.
         $this->profile = CRM_Selfservice_SendLinkProfile::createDefaultProfile($profile_name);
@@ -110,9 +120,9 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
       'log',
       E::ts('Log Requests'),
       [
-        0 => E::ts("No"),
-        1 => E::ts("Only Link Requests"),
-        2 => E::ts("Everything"),
+        0 => E::ts('No'),
+        1 => E::ts('Only Link Requests'),
+        2 => E::ts('Everything'),
       ],
       FALSE
     );
@@ -185,8 +195,10 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
     }
 
     // Restrict profile names to alphanumeric characters and the underscore.
-    if (isset($values['name']) && preg_match("/[^A-Za-z0-9_]/", $values['name'])) {
-      $this->_errors['name'] = E::ts('Only alphanumeric characters and the underscore (_) are allowed for profile names.');
+    if (isset($values['name']) && preg_match('/[^A-Za-z0-9_]/', $values['name'])) {
+      $this->_errors['name'] = E::ts(
+        'Only alphanumeric characters and the underscore (_) are allowed for profile names.'
+      );
     }
 
     return parent::validate();
@@ -230,6 +242,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
         }
         $this->profile->save();
         break;
+
       case 'delete':
         $this->profile->delete();
         break;
@@ -244,7 +257,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
    * @throws \CRM_Core_Exception
    */
   protected function getMessageTemplates(): array {
-    $templates = ['' => E::ts("disabled")];
+    $templates = ['' => E::ts('disabled')];
     $query = civicrm_api3('MessageTemplate', 'get', [
       'option.limit' => 0,
       'is_active' => 1,

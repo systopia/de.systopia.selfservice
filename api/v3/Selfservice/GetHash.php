@@ -13,6 +13,8 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 /**
  * Selfservice.getHash gives you a hash value for a contact ID
  *  if the hash is still valid.
@@ -20,21 +22,21 @@
  * @return array API result array
  * @access public
  */
-function civicrm_api3_selfservice_get_hash($params)
-{
+function civicrm_api3_selfservice_get_hash($params) {
   $config = new CRM_Selfservice_Configuration();
-  $config->log("Selfservice.get_hash", $params, CRM_Selfservice_Configuration::LOG_ALL_API);
+  $config->log('Selfservice.get_hash', $params, CRM_Selfservice_Configuration::LOG_ALL_API);
 
   $contact_id = (int) $params['contact_id'];
   if (!$contact_id) {
-    return civicrm_api3_create_error("No contact ID given");
+    return civicrm_api3_create_error('No contact ID given');
   }
 
   $hash = CRM_Selfservice_HashLinks::getContactHash($contact_id);
   if ($hash) {
     return civicrm_api3_create_success([$contact_id => ['id' => $contact_id, 'hash' => $hash]]);
-  } else {
-    return civicrm_api3_create_error("Hash could not be calculated.");
+  }
+  else {
+    return civicrm_api3_create_error('Hash could not be calculated.');
   }
 }
 
@@ -49,5 +51,5 @@ function _civicrm_api3_selfservice_get_hash_spec(&$params) {
     'name'           => 'contact_id',
     'api.required'   => 1,
     'title'          => 'Contact ID',
-    ];
+  ];
 }

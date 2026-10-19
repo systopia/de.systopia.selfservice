@@ -13,14 +13,16 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 namespace Civi\Selfservice\ActionProvider\Action;
 
 use CRM_Selfservice_ExtensionUtil as E;
 
-use \Civi\ActionProvider\Action\AbstractAction;
-use \Civi\ActionProvider\Parameter\ParameterBagInterface;
-use \Civi\ActionProvider\Parameter\Specification;
-use \Civi\ActionProvider\Parameter\SpecificationBag;
+use Civi\ActionProvider\Action\AbstractAction;
+use Civi\ActionProvider\Parameter\ParameterBagInterface;
+use Civi\ActionProvider\Parameter\Specification;
+use Civi\ActionProvider\Parameter\SpecificationBag;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -34,10 +36,15 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
       return;
     }
     $typeFactoryDefinition = $container->getDefinition('action_provider');
-    $typeFactoryDefinition->addMethodCall('addAction', ['GetHash', 'Civi\Selfservice\ActionProvider\Action\GetHash', E::ts('Get Self-Service Token'), [
+    $typeFactoryDefinition->addMethodCall('addAction', [
+      'GetHash',
+      'Civi\Selfservice\ActionProvider\Action\GetHash',
+      E::ts('Get Self-Service Token'),
+      [
         AbstractAction::SINGLE_CONTACT_ACTION_TAG,
-        AbstractAction::DATA_RETRIEVAL_TAG
-    ]]);
+        AbstractAction::DATA_RETRIEVAL_TAG,
+      ],
+    ]);
   }
 
   /**
@@ -56,8 +63,8 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
    */
   public function getParameterSpecification() {
     return new SpecificationBag([
-        new Specification('contact_id', 'Integer', E::ts('Contact ID'), false, null, null, null, false),
-   ]);
+      new Specification('contact_id', 'Integer', E::ts('Contact ID'), FALSE, NULL, NULL, NULL, FALSE),
+    ]);
   }
 
   /**
@@ -69,7 +76,7 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
    */
   public function getOutputSpecification() {
     return new SpecificationBag([
-      new Specification('hash', 'String', E::ts('Self-Service Token'), false, null, null, null, false),
+      new Specification('hash', 'String', E::ts('Self-Service Token'), FALSE, NULL, NULL, NULL, FALSE),
     ]);
   }
 
@@ -79,7 +86,7 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
    * @param ParameterBagInterface $parameters
    *   The parameters to this action.
    * @param ParameterBagInterface $output
-   * 	 The parameters this action can send back
+   *      The parameters this action can send back
    * @return void
    */
   protected function doAction(ParameterBagInterface $parameters, ParameterBagInterface $output) {
@@ -88,6 +95,7 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
 
     // execute
     $result = \civicrm_api3('Selfservice', 'get_hash', $params);
-    $output->setParameter('hash', $result['values'][$params['contact_id']]['hash'] );
+    $output->setParameter('hash', $result['values'][$params['contact_id']]['hash']);
   }
+
 }

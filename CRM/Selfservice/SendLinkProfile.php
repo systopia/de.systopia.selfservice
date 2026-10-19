@@ -13,24 +13,26 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_SendLinkProfile {
 
   /**
-   * @var self[] $_profiles
+   * @var self[]
    *   Caches the profile objects.
    */
   protected static ?array $_profiles;
 
   /**
-   * @var string $name
+   * @var string
    *   The name of the profile.
    */
   protected string $name;
 
   /**
-   * @var array $data
+   * @var array
    *   The properties of the profile.
    */
   protected array $data;
@@ -84,8 +86,8 @@ class CRM_Selfservice_SendLinkProfile {
       // TODO: Remove backwards-compatibility soon.
       //       CRM_Core_BAO_Domain::getFromEmail() is available from 5.44.
       'sender' => method_exists('CRM_Core_BAO_Domain', 'getFromEmail')
-        ? CRM_Core_BAO_Domain::getFromEmail()
-        : current(CRM_Core_BAO_Domain::getNameAndEmail(FALSE, TRUE)),
+      ? CRM_Core_BAO_Domain::getFromEmail()
+      : current(CRM_Core_BAO_Domain::getNameAndEmail(FALSE, TRUE)),
     ]);
   }
 
@@ -131,7 +133,7 @@ class CRM_Selfservice_SendLinkProfile {
       self::$_profiles = [];
       if ($profiles_data = Civi::settings()->get(E::SHORT_NAME . '_sendlink_profiles')) {
         foreach ($profiles_data as $profile_name => $profile_data) {
-          self::$_profiles[$profile_name] = new self($profile_name, $profile_data);
+          self::$_profiles[$profile_name] = new self((string) $profile_name, $profile_data);
         }
       }
     }

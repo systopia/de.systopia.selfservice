@@ -1,0 +1,930 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Binary operation "\+" between mixed and array results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '''
+				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
+				In most cases this can be replaced with
+				  \$list\[\$key\] \?\? \$default
+				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
+				return NULL\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Do not throw the \\Exception base class\.$#'
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:getSetting\(\) has parameter \$name with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:log\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:log\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:log\(\) has parameter \$identifier with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:log\(\) has parameter \$log_level with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Method CRM_Selfservice_Configuration\:\:shouldLog\(\) has parameter \$level with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, CRM_Selfservice_SendLinkProfile\|null given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Property CRM_Selfservice_Configuration\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/Configuration.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''_copy'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method delete\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method getData\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method getName\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method save\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method setAttribute\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot call method setName\(\) on CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Cannot clone CRM_Selfservice_SendLinkProfile\|null\.$#'
+			identifier: clone.nonObject
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Class CRM_Selfservice_Form_SendLinkProfile has an uninitialized property \$_op\. Give it default value or assign it in the constructor\.$#'
+			identifier: property.uninitialized
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Class CRM_Selfservice_Form_SendLinkProfile has an uninitialized property \$profile\. Give it default value or assign it in the constructor\.$#'
+			identifier: property.uninitialized
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 2
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 4
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_SendLinkProfile\:\:buildQuickForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_SendLinkProfile\:\:getMessageTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_SendLinkProfile\:\:postProcess\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_SendLinkProfile\:\:setDefaultValues\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_SendLinkProfile\:\:setDefaultValues\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Only booleans are allowed in &&, int\|false given on the right side\.$#'
+			identifier: booleanAnd.rightNotBoolean
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, mixed given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 3
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+			identifier: if.condNotBoolean
+			count: 2
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Parameter \#1 \$name of static method CRM_Selfservice_SendLinkProfile\:\:createDefaultProfile\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Property CRM_Selfservice_Form_SendLinkProfile\:\:\$_op \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '#^Return type \(array\|null\) of method CRM_Selfservice_Form_SendLinkProfile\:\:setDefaultValues\(\) should be covariant with return type \(array\) of method CRM_Core_Form\:\:setDefaultValues\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: CRM/Selfservice/Form/SendLinkProfile.php
+
+		-
+			message: '''
+				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
+				In most cases this can be replaced with
+				  \$list\[\$key\] \?\? \$default
+				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
+				return NULL\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 5
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_Settings\:\:buildQuickForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_Settings\:\:getMessageTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Method CRM_Selfservice_Form_Settings\:\:postProcess\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Form/Settings.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$bulk_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$contact_id\.$#'
+			identifier: property.notFound
+			count: 9
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$primary_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Call to an undefined method object\:\:fetch\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Call to an undefined method object\:\:free\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '''
+				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
+				In most cases this can be replaced with
+				  \$list\[\$key\] \?\? \$default
+				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
+				return NULL\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 3
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 3
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:addTokens\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:addTokens\(\) has parameter \$tokens with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactHash\(\) has parameter \$contact_id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactHashes\(\) has parameter \$contact_ids with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactHashes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactIDsWithSharedEmails\(\) has parameter \$contact_ids with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactIDsWithSharedEmails\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getContactIdFromHash\(\) has parameter \$contact_hash with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getLinkTokens\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getLinks\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getLinks\(\) should return array but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:getLinksByTokenName\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has parameter \$cids with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has parameter \$context with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has parameter \$job with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has parameter \$tokens with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Method CRM_Selfservice_HashLinks\:\:tokenValues\(\) has parameter \$values with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, int\|false given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_intersect expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Part \$token \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 2
+			path: CRM/Selfservice/HashLinks.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''CRM_Core_BAO_Domain'' and ''getFromEmail'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Do not throw the \\Exception base class\.$#'
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:allowedAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:delete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:getData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:getProfile\(\) has parameter \$name with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:save\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:setAttribute\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:storeProfiles\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Method CRM_Selfservice_SendLinkProfile\:\:validate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Parameter \#2 \$data of class CRM_Selfservice_SendLinkProfile constructor expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '#^Property CRM_Selfservice_SendLinkProfile\:\:\$data type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Selfservice/SendLinkProfile.php
+
+		-
+			message: '''
+				#^Call to deprecated method rebuildMenuAndCaches\(\) of class CRM_Core_Invoke\:
+				Deprecated Feb 2025 in favor of Civi\:\:rebuild\(\)\.
+				  Reassess after Jun 2026\.
+				  For an extension bridging before\+after, suggest guard like\:
+				    if \(version_compare\(CRM_Utils_System\:\:version\(\), 'X\.Y\.Z', '\>\='\)\) Civi\:\:rebuild\(\.\.\.\)\-\>execute\(\)
+				    else CRM_Core_Invoke\:\:rebuildMenuAndCaches\(\);
+				  Choose an 'X\.Y\.Z' after determining that your preferred rebuild\-target\(s\) are specifically available in X\.Y\.Z\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 1
+			path: CRM/Selfservice/Upgrader.php
+
+		-
+			message: '#^Cannot access offset ''selfservice_link_request_log'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Selfservice/Upgrader.php
+
+		-
+			message: '#^Cannot access offset ''selfservice_link_request_sender''\|''selfservice_link_request_template_contact_ambiguous''\|''selfservice_link_request_template_contact_known''\|''selfservice_link_request_template_contact_unknown'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Selfservice/Upgrader.php
+
+		-
+			message: '#^Method CRM_Selfservice_Upgrader\:\:uninstall\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Selfservice/Upgrader.php
+
+		-
+			message: '#^Cannot access offset ''id'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/ContactResolve.php
+
+		-
+			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\ContactResolve\:\:process\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/ContactResolve.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/GetHash.php
+
+		-
+			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\GetHash\:\:process\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/GetHash.php
+
+		-
+			message: '#^Cannot access offset ''error_message'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Cannot access offset ''is_error'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^In method "Civi\\Selfservice\\ActionProvider\\Action\\SendLink\:\:doAction", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\SendLink\:\:getProfiles\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\SendLink\:\:process\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_get_contact_spec\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Selfservice/GetContact.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_get_contact_spec\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/GetContact.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_get_contact\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Selfservice/GetContact.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_get_contact\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/GetContact.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, int\|null given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: api/v3/Selfservice/GetContact.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_get_hash_spec\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_get_hash_spec\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_get_hash\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_get_hash\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, int given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, string given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: api/v3/Selfservice/GetHash.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 3
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_sendlink_spec\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Function _civicrm_api3_selfservice_sendlink_spec\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_sendlink\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Function civicrm_api3_selfservice_sendlink\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^If_\: Use a function e\.g\. `count\(\$foo\) \> 0` instead of `\$foo`\.$#'
+			identifier: voku.If
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, array\<true\> given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, int given\.$#'
+			identifier: if.condNotBoolean
+			count: 3
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Parameter \#1 \$values of function civicrm_api3_create_success expects array\|int, string given\.$#'
+			identifier: argument.type
+			count: 3
+			path: api/v3/Selfservice/Sendlink.php
+
+		-
+			message: '#^Function selfservice_civicrm_alterAPIPermissions\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_alterAPIPermissions\(\) has parameter \$action with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_alterAPIPermissions\(\) has parameter \$entity with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_alterAPIPermissions\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_alterAPIPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_config\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_config\(\) has parameter \$config with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_container\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_enable\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_install\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_permission\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_permission\(\) has parameter \$permissions with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has parameter \$cids with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has parameter \$context with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has parameter \$job with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has parameter \$tokens with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokenValues\(\) has parameter \$values with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokens\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: selfservice.php
+
+		-
+			message: '#^Function selfservice_civicrm_tokens\(\) has parameter \$tokens with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: selfservice.php

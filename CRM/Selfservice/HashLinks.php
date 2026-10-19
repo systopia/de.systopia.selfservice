@@ -13,12 +13,14 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 /**
  * Generates tokens for personalised links
  */
 class CRM_Selfservice_HashLinks {
 
-  const PERSONALISED_LINKS = "PersonalisedLink";
+  public const PERSONALISED_LINKS = 'PersonalisedLink';
 
   /**
    * Get a list of the currently configured link specs
@@ -95,11 +97,13 @@ class CRM_Selfservice_HashLinks {
       if ($valid) {
         // everything checks out
         return $contact_id;
-      } else {
+      }
+      else {
         // checksum not valid (any more)
         return NULL;
       }
-    } else {
+    }
+    else {
       // code pattern not recognised
       return NULL;
     }
@@ -134,19 +138,29 @@ class CRM_Selfservice_HashLinks {
         GROUP BY contact.id");
       while ($email_query->fetch()) {
         if ($email_query->primary_email) {
-          if ($email_query->contact_id != CRM_Utils_Array::value($email_query->primary_email, $email_to_contact, $email_query->contact_id)) {
+          if ($email_query->contact_id != CRM_Utils_Array::value(
+            $email_query->primary_email,
+            $email_to_contact,
+            $email_query->contact_id
+          )) {
             // recorded with to another contact? this is already a conflict!
             $conflicted_contact_ids[$email_query->contact_id] = $email_query->contact_id;
-          } else {
+          }
+          else {
             $email_to_contact[$email_query->primary_email] = $email_query->contact_id;
             $email_list[] = CRM_Core_DAO::escapeString($email_query->primary_email);
           }
         }
         if ($email_query->bulk_email) {
-          if ($email_query->contact_id != CRM_Utils_Array::value($email_query->bulk_email, $email_to_contact, $email_query->contact_id)) {
+          if ($email_query->contact_id != CRM_Utils_Array::value(
+            $email_query->bulk_email,
+            $email_to_contact,
+            $email_query->contact_id
+          )) {
             // recorded with to another contact? this is already a conflict!
             $conflicted_contact_ids[$email_query->contact_id] = $email_query->contact_id;
-          } else {
+          }
+          else {
             $email_to_contact[$email_query->bulk_email] = $email_query->contact_id;
             $email_list[] = CRM_Core_DAO::escapeString($email_query->bulk_email);
           }
@@ -167,7 +181,8 @@ class CRM_Selfservice_HashLinks {
           AND (contact.is_deleted IS NULL OR contact.is_deleted = 0)");
         while ($duplicates_query->fetch()) {
           $email_contact_id = $email_to_contact[$duplicates_query->email] ?? NULL;
-          if ($email_contact_id) { // this should always be the case
+          // this should always be the case
+          if ($email_contact_id) {
             if ($email_contact_id != $duplicates_query->contact_id) {
               // the email is used with another contact -> conflict
               $conflicted_contact_ids[$email_contact_id] = $email_contact_id;
@@ -196,15 +211,18 @@ class CRM_Selfservice_HashLinks {
    * @param $values - array of values, keyed by contact id
    * @param $cids - array of contactIDs that the system needs values for.
    * @param $job - the job_id
-   * @param $tokens - tokens used in the mailing - use this to check whether a token is being used and avoid fetching data for unneeded tokens
+   * @param $tokens - tokens used in the mailing - use this to check whether a token is being used and avoid
+   *   fetching data for unneeded tokens
    * @param $context - the class name
    *
    * @see https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_tokenValues
    */
-  public static function tokenValues(&$values, $cids, $job = null, $tokens = [], $context = null) {
+  public static function tokenValues(&$values, $cids, $job = NULL, $tokens = [], $context = NULL) {
     // get normalise $link_tokens_used
     $link_tokens_used = CRM_Utils_Array::value(self::PERSONALISED_LINKS, $tokens, []);
-    if (!isset($link_tokens_used[0])) $link_tokens_used = array_keys($link_tokens_used);
+    if (!isset($link_tokens_used[0])) {
+      $link_tokens_used = array_keys($link_tokens_used);
+    }
 
     // find out if ours are being used
     $link_tokens_configured = self::getLinkTokens();
@@ -216,12 +234,15 @@ class CRM_Selfservice_HashLinks {
     // extract contact_ids
     if (is_string($cids)) {
       $contact_ids = explode(',', $cids);
-    } elseif (isset($cids['contact_id'])) {
+    }
+    elseif (isset($cids['contact_id'])) {
       $contact_ids = [$cids['contact_id']];
-    } elseif (is_array($cids)) {
+    }
+    elseif (is_array($cids)) {
       $contact_ids = $cids;
-    } else {
-      Civi::log()->warning("PersonalisedLinks: Cannot interpret cids: " . json_encode($cids));
+    }
+    else {
+      Civi::log()->warning('PersonalisedLinks: Cannot interpret cids: ' . json_encode($cids));
       return;
     }
 
@@ -236,12 +257,18 @@ class CRM_Selfservice_HashLinks {
         $link = $links_by_token[$token];
         if (isset($conflicted_cids[$cid])) {
           // this is a conflict -> set the fallback text
-          $values[$cid][self::PERSONALISED_LINKS. ".{$token}"] = $link['fallback_html'];
-        } else {
+          $values[$cid][self::PERSONALISED_LINKS . ".{$token}"] = $link['fallback_html'];
+        }
+        else {
           // all good -> set the link text
-          $values[$cid][self::PERSONALISED_LINKS . ".{$token}"] = preg_replace('/\{hash\}/', $contact_hashes[$cid], $link['link_html']);
+          $values[$cid][self::PERSONALISED_LINKS . ".{$token}"] = preg_replace(
+            '/\{hash\}/',
+            $contact_hashes[$cid],
+            $link['link_html']
+          );
         }
       }
     }
   }
+
 }
