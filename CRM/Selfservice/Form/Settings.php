@@ -94,12 +94,12 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     $link_specs = CRM_Selfservice_HashLinks::getLinks();
     foreach (range(1, self::HASH_LINK_COUNT) as $i) {
       if (isset($link_specs[$i - 1])) {
-        $spec = $link_specs[$i - 1];
+        $spec = $link_specs[$i - 1] + ['name' => '', 'label' => '', 'link_html' => '', 'fallback_html' => ''];
         $this->setDefaults([
-          "hash_link_{$i}"               => CRM_Utils_Array::value('name', $spec, ''),
-          "hash_link_name_{$i}"          => CRM_Utils_Array::value('label', $spec, ''),
-          "hash_link_html_{$i}"          => CRM_Utils_Array::value('link_html', $spec, ''),
-          "hash_link_fallback_html_{$i}" => CRM_Utils_Array::value('fallback_html', $spec, ''),
+          "hash_link_{$i}"               => $spec['name'],
+          "hash_link_name_{$i}"          => $spec['label'],
+          "hash_link_html_{$i}"          => $spec['link_html'],
+          "hash_link_fallback_html_{$i}" => $spec['fallback_html'],
         ]);
       }
     }
@@ -120,7 +120,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
       if (!empty($values["hash_link_{$i}"])) {
         $hash_link_specs[] = [
           'name'          => $values["hash_link_{$i}"],
-          'label'         => CRM_Utils_Array::value("hash_link_name_{$i}", $values, $values["hash_link_{$i}"]),
+          'label'         => $values["hash_link_name_{$i}"] ?? $values["hash_link_{$i}"],
           'link_html'     => html_entity_decode($values["hash_link_html_{$i}"]),
           'fallback_html' => html_entity_decode($values["hash_link_fallback_html_{$i}"]),
         ];

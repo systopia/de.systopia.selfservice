@@ -56,7 +56,15 @@ class CRM_Selfservice_Upgrader extends CRM_Extension_Upgrader_Base {
     ];
     Civi::settings()->set('selfservice_configuration', $current_values);
 
-    CRM_Core_Invoke::rebuildMenuAndCaches();
+    if (version_compare(CRM_Utils_System::version(), '6.1.0', '>=')) {
+      // @phpstan-ignore argument.type (core's array shape does not know the '*' key)
+      Civi::rebuild(['*' => TRUE, 'sessions' => FALSE, 'triggers' => FALSE])->execute();
+    }
+    else {
+      // @phpstan-ignore staticMethod.deprecated
+      CRM_Core_Invoke::rebuildMenuAndCaches();
+    }
+
     return TRUE;
   }
 

@@ -138,10 +138,8 @@ class CRM_Selfservice_HashLinks {
         GROUP BY contact.id");
       while ($email_query->fetch()) {
         if ($email_query->primary_email) {
-          if ($email_query->contact_id != CRM_Utils_Array::value(
-            $email_query->primary_email,
-            $email_to_contact,
-            $email_query->contact_id
+          if ($email_query->contact_id != (
+            $email_to_contact[$email_query->primary_email] ?? $email_query->contact_id
           )) {
             // recorded with to another contact? this is already a conflict!
             $conflicted_contact_ids[$email_query->contact_id] = $email_query->contact_id;
@@ -152,10 +150,8 @@ class CRM_Selfservice_HashLinks {
           }
         }
         if ($email_query->bulk_email) {
-          if ($email_query->contact_id != CRM_Utils_Array::value(
-            $email_query->bulk_email,
-            $email_to_contact,
-            $email_query->contact_id
+          if ($email_query->contact_id != (
+            $email_to_contact[$email_query->bulk_email] ?? $email_query->contact_id
           )) {
             // recorded with to another contact? this is already a conflict!
             $conflicted_contact_ids[$email_query->contact_id] = $email_query->contact_id;
@@ -219,7 +215,7 @@ class CRM_Selfservice_HashLinks {
    */
   public static function tokenValues(&$values, $cids, $job = NULL, $tokens = [], $context = NULL) {
     // get normalise $link_tokens_used
-    $link_tokens_used = CRM_Utils_Array::value(self::PERSONALISED_LINKS, $tokens, []);
+    $link_tokens_used = $tokens[self::PERSONALISED_LINKS] ?? [];
     if (!isset($link_tokens_used[0])) {
       $link_tokens_used = array_keys($link_tokens_used);
     }

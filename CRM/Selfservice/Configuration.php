@@ -45,7 +45,7 @@ class CRM_Selfservice_Configuration {
    * @return mixed
    */
   public function getSetting($name, $default_value = NULL) {
-    return CRM_Utils_Array::value($name, $this->config, $default_value);
+    return $this->config[$name] ?? $default_value;
   }
 
   /**

@@ -7,18 +7,6 @@ parameters:
 			path: CRM/Selfservice/Configuration.php
 
 		-
-			message: '''
-				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
-				In most cases this can be replaced with
-				  \$list\[\$key\] \?\? \$default
-				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
-				return NULL\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 1
-			path: CRM/Selfservice/Configuration.php
-
-		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
 			count: 1
@@ -234,18 +222,6 @@ parameters:
 			path: CRM/Selfservice/Form/SendLinkProfile.php
 
 		-
-			message: '''
-				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
-				In most cases this can be replaced with
-				  \$list\[\$key\] \?\? \$default
-				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
-				return NULL\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 5
-			path: CRM/Selfservice/Form/Settings.php
-
-		-
 			message: '#^Cannot access offset ''values'' on array\|int\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
@@ -300,12 +276,6 @@ parameters:
 			path: CRM/Selfservice/HashLinks.php
 
 		-
-			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: CRM/Selfservice/HashLinks.php
-
-		-
 			message: '#^Call to an undefined method object\:\:fetch\(\)\.$#'
 			identifier: method.notFound
 			count: 2
@@ -315,24 +285,6 @@ parameters:
 			message: '#^Call to an undefined method object\:\:free\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: CRM/Selfservice/HashLinks.php
-
-		-
-			message: '''
-				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
-				In most cases this can be replaced with
-				  \$list\[\$key\] \?\? \$default
-				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
-				return NULL\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 3
-			path: CRM/Selfservice/HashLinks.php
-
-		-
-			message: '#^Cannot access offset 0 on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
 			path: CRM/Selfservice/HashLinks.php
 
 		-
@@ -462,24 +414,6 @@ parameters:
 			path: CRM/Selfservice/HashLinks.php
 
 		-
-			message: '#^Parameter \#1 \$array of function array_intersect expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: CRM/Selfservice/HashLinks.php
-
-		-
-			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: CRM/Selfservice/HashLinks.php
-
-		-
-			message: '#^Part \$token \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 2
-			path: CRM/Selfservice/HashLinks.php
-
-		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
@@ -585,20 +519,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: CRM/Selfservice/SendLinkProfile.php
-
-		-
-			message: '''
-				#^Call to deprecated method rebuildMenuAndCaches\(\) of class CRM_Core_Invoke\:
-				Deprecated Feb 2025 in favor of Civi\:\:rebuild\(\)\.
-				  Reassess after Jun 2026\.
-				  For an extension bridging before\+after, suggest guard like\:
-				    if \(version_compare\(CRM_Utils_System\:\:version\(\), 'X\.Y\.Z', '\>\='\)\) Civi\:\:rebuild\(\.\.\.\)\-\>execute\(\)
-				    else CRM_Core_Invoke\:\:rebuildMenuAndCaches\(\);
-				  Choose an 'X\.Y\.Z' after determining that your preferred rebuild\-target\(s\) are specifically available in X\.Y\.Z\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 1
-			path: CRM/Selfservice/Upgrader.php
 
 		-
 			message: '#^Cannot access offset ''selfservice_link_request_log'' on mixed\.$#'
