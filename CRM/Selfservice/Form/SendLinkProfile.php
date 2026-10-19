@@ -171,7 +171,7 @@ class CRM_Selfservice_Form_SendLinkProfile extends CRM_Core_Form {
       ],
       [
         'type' => 'cancel',
-        'name' => ts('Cancel'),
+        'name' => E::ts('Cancel'),
       ],
     ]);
 

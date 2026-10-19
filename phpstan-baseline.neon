@@ -625,20 +625,8 @@ parameters:
 			path: Civi/Selfservice/ActionProvider/Action/ContactResolve.php
 
 		-
-			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\ContactResolve\:\:process\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: Civi/Selfservice/ActionProvider/Action/ContactResolve.php
-
-		-
 			message: '#^Cannot access offset ''values'' on array\|int\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: Civi/Selfservice/ActionProvider/Action/GetHash.php
-
-		-
-			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\GetHash\:\:process\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: Civi/Selfservice/ActionProvider/Action/GetHash.php
 
@@ -673,12 +661,6 @@ parameters:
 
 		-
 			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\SendLink\:\:getProfiles\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: Civi/Selfservice/ActionProvider/Action/SendLink.php
-
-		-
-			message: '#^Method Civi\\Selfservice\\ActionProvider\\Action\\SendLink\:\:process\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
 			path: Civi/Selfservice/ActionProvider/Action/SendLink.php

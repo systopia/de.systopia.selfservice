@@ -31,7 +31,7 @@ class GetHash extends AbstractAction implements CompilerPassInterface {
   /**
    * Register this one action: SelfServiceResolve
    */
-  public function process(ContainerBuilder $container) {
+  public function process(ContainerBuilder $container): void {
     if (!$container->hasDefinition('action_provider')) {
       return;
     }
