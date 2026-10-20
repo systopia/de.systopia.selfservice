@@ -13,7 +13,7 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
-use Civi\API\Exception\UnauthorizedException;
+declare(strict_types = 1);
 
 /**
  * Process Selfservice.sendlink
@@ -23,10 +23,9 @@ use Civi\API\Exception\UnauthorizedException;
  * @return array API result array
  * @access public
  */
-function civicrm_api3_selfservice_sendlink($params)
-{
+function civicrm_api3_selfservice_sendlink($params) {
   $config = new CRM_Selfservice_Configuration($params['profile'] ?? 'default');
-  $config->log("Selfservice.sendlink", $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
+  $config->log('Selfservice.sendlink', $params, CRM_Selfservice_Configuration::LOG_LINK_REQUESTS_ONLY);
 
   // get templates
   $template_email_known     = (int) $config->getSetting('template_contact_known');
@@ -36,10 +35,10 @@ function civicrm_api3_selfservice_sendlink($params)
   // find contact ids for the given email
   $contact_ids = [];
   $query = civicrm_api3('Email', 'get', [
-      'check_permissions' => 0,
-      'option.limit'      => 0,
-      'email'             => trim($params['email']),
-      'return'            => 'contact_id'
+    'check_permissions' => 0,
+    'option.limit'      => 0,
+    'email'             => trim($params['email']),
+    'return'            => 'contact_id',
   ]);
   foreach ($query['values'] as $email) {
     $contact_ids[$email['contact_id']] = TRUE;
@@ -48,11 +47,11 @@ function civicrm_api3_selfservice_sendlink($params)
   // remove the contacts that are deleted
   if ($contact_ids) {
     $query = civicrm_api3('Contact', 'get', [
-        'check_permissions' => 0,
-        'option.limit'      => 0,
-        'id'                => ['IN' => array_keys($contact_ids)],
-        'is_deleted'        => 1,
-        'return'            => 'id',
+      'check_permissions' => 0,
+      'option.limit'      => 0,
+      'id'                => ['IN' => array_keys($contact_ids)],
+      'is_deleted'        => 1,
+      'return'            => 'id',
     ]);
     foreach ($query['values'] as $deleted_contact) {
       unset($contact_ids[$deleted_contact['id']]);
@@ -60,53 +59,56 @@ function civicrm_api3_selfservice_sendlink($params)
   }
 
   switch (count($contact_ids)) {
-    case 0: // contact unknown
+    // contact unknown
+    case 0:
       if ($template_email_unknown) {
         civicrm_api3('MessageTemplate', 'send', [
-            'check_permissions' => 0,
-            'id'                => $template_email_unknown,
-            'from'              => $config->getSetting('sender'),
-            'to_email'          => trim($params['email']),
+          'check_permissions' => 0,
+          'id'                => $template_email_unknown,
+          'from'              => $config->getSetting('sender'),
+          'to_email'          => trim($params['email']),
         ]);
-        return civicrm_api3_create_success("email sent");
+        return civicrm_api3_create_success('email sent');
       }
       break;
 
-    case 1: // contact known
+    // contact known
+    case 1:
       if ($template_email_known) {
         $contact_id = min(array_keys($contact_ids));
         civicrm_api3('MessageTemplate', 'send', [
-            'check_permissions' => 0,
-            'id'                => $template_email_known,
-            'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
-            'from'              => $config->getSetting('sender'),
-            'contact_id'        => $contact_id,
-            'to_email'          => trim($params['email']),
+          'check_permissions' => 0,
+          'id'                => $template_email_known,
+          'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
+          'from'              => $config->getSetting('sender'),
+          'contact_id'        => $contact_id,
+          'to_email'          => trim($params['email']),
         ]);
-        return civicrm_api3_create_success("email sent");
+        return civicrm_api3_create_success('email sent');
       }
       break;
 
-    default: // contact ambiguous
+    // contact ambiguous
+    default:
       if ($template_email_ambiguous) {
         // we found a contact -> send to the one with the lowest ID
         $contact_id = min(array_keys($contact_ids));
         civicrm_api3('MessageTemplate', 'send', [
-            'check_permissions' => 0,
-            'id'                => $template_email_ambiguous,
-            'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
-            'from'              => $config->getSetting('sender'),
-            'contact_id'        => $contact_id,
-            'to_email'          => trim($params['email']),
+          'check_permissions' => 0,
+          'id'                => $template_email_ambiguous,
+          'to_name'           => civicrm_api3('Contact', 'getvalue', ['id' => $contact_id, 'return' => 'display_name']),
+          'from'              => $config->getSetting('sender'),
+          'contact_id'        => $contact_id,
+          'to_email'          => trim($params['email']),
         ]);
-        return civicrm_api3_create_success("email sent");
+        return civicrm_api3_create_success('email sent');
       }
       break;
   }
 
   // no template set for this case -> do nothing
-  Civi::log()->debug("Selfservice.sendlink requested but not enabled. Configure the templates");
-  return civicrm_api3_create_error("disabled");
+  Civi::log()->debug('Selfservice.sendlink requested but not enabled. Configure the templates');
+  return civicrm_api3_create_error('disabled');
 }
 
 /**
@@ -121,7 +123,7 @@ function _civicrm_api3_selfservice_sendlink_spec(&$params) {
     'name'           => 'email',
     'api.required'   => 1,
     'title'          => 'email address',
-    ];
+  ];
   $params['profile'] = [
     'name' => 'profile',
     'title' => 'Profile name',

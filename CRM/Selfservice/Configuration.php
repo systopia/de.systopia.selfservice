@@ -13,14 +13,16 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Configuration {
 
   protected array $config;
 
-  const LOG_LINK_REQUESTS_ONLY = 1;
-  const LOG_ALL_API            = 2;
+  public const LOG_LINK_REQUESTS_ONLY = 1;
+  public const LOG_ALL_API            = 2;
 
   /**
    * @param string $profile_name
@@ -43,7 +45,7 @@ class CRM_Selfservice_Configuration {
    * @return mixed
    */
   public function getSetting($name, $default_value = NULL) {
-    return CRM_Utils_Array::value($name, $this->config, $default_value);
+    return $this->config[$name] ?? $default_value;
   }
 
   /**

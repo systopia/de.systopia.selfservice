@@ -13,11 +13,13 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Selfservice_ExtensionUtil as E;
 
 class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
 
-  const HASH_LINK_COUNT = 10;
+  public const HASH_LINK_COUNT = 10;
 
   /**
    * {@inheritDoc}
@@ -27,7 +29,7 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
       'select',
       'log',
       E::ts('Log Requests'),
-      [0 => E::ts("No"), 1 => E::ts("Only Link Requests"), 2 => E::ts("Everything")],
+      [0 => E::ts('No'), 1 => E::ts('Only Link Requests'), 2 => E::ts('Everything')],
       FALSE
     );
 
@@ -43,13 +45,13 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
 
     // Configuration for hash links (personalised links)
     $hash_link_ids = range(1, self::HASH_LINK_COUNT);
-    $this->assign("hash_links", $hash_link_ids);
+    $this->assign('hash_links', $hash_link_ids);
     foreach ($hash_link_ids as $i) {
       $this->add(
           'text',
           "hash_link_{$i}",
           E::ts('Token Key'),
-          ['placeholder' => E::ts("Enter key to activate")]
+          ['placeholder' => E::ts('Enter key to activate')]
       );
       $this->addRule("hash_link_{$i}", E::ts("The name mustn't contain special characters or spaces."), 'alphanumeric');
 
@@ -75,9 +77,9 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
 
     $this->addButtons([
         [
-            'type'      => 'submit',
-            'name'      => E::ts('Save'),
-            'isDefault' => TRUE,
+          'type'      => 'submit',
+          'name'      => E::ts('Save'),
+          'isDefault' => TRUE,
         ],
     ]);
 
@@ -92,12 +94,12 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     $link_specs = CRM_Selfservice_HashLinks::getLinks();
     foreach (range(1, self::HASH_LINK_COUNT) as $i) {
       if (isset($link_specs[$i - 1])) {
-        $spec = $link_specs[$i - 1];
+        $spec = $link_specs[$i - 1] + ['name' => '', 'label' => '', 'link_html' => '', 'fallback_html' => ''];
         $this->setDefaults([
-            "hash_link_{$i}"               => CRM_Utils_Array::value('name', $spec, ''),
-            "hash_link_name_{$i}"          => CRM_Utils_Array::value('label', $spec, ''),
-            "hash_link_html_{$i}"          => CRM_Utils_Array::value('link_html', $spec, ''),
-            "hash_link_fallback_html_{$i}" => CRM_Utils_Array::value('fallback_html', $spec, ''),
+          "hash_link_{$i}"               => $spec['name'],
+          "hash_link_name_{$i}"          => $spec['label'],
+          "hash_link_html_{$i}"          => $spec['link_html'],
+          "hash_link_fallback_html_{$i}" => $spec['fallback_html'],
         ]);
       }
     }
@@ -108,9 +110,8 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
   /**
    * {@inheritDoc}
    */
-  public function postProcess()
-  {
-    $values = $this->exportValues(null, true);
+  public function postProcess() {
+    $values = $this->exportValues(NULL, TRUE);
     unset($values['qfKey'], $values['entryURL']);
 
     // extract and store hash link specs
@@ -118,13 +119,18 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
     foreach (range(1, self::HASH_LINK_COUNT) as $i) {
       if (!empty($values["hash_link_{$i}"])) {
         $hash_link_specs[] = [
-            'name'          => $values["hash_link_{$i}"],
-            'label'         => CRM_Utils_Array::value("hash_link_name_{$i}", $values, $values["hash_link_{$i}"]),
-            'link_html'     => html_entity_decode($values["hash_link_html_{$i}"]),
-            'fallback_html' => html_entity_decode($values["hash_link_fallback_html_{$i}"])
+          'name'          => $values["hash_link_{$i}"],
+          'label'         => $values["hash_link_name_{$i}"] ?? $values["hash_link_{$i}"],
+          'link_html'     => html_entity_decode($values["hash_link_html_{$i}"]),
+          'fallback_html' => html_entity_decode($values["hash_link_fallback_html_{$i}"]),
         ];
       }
-      unset($values["hash_link_{$i}"], $values["hash_link_name_{$i}"], $values["hash_link_html_{$i}"], $values["hash_link_fallback_html_{$i}"]);
+      unset(
+        $values["hash_link_{$i}"],
+        $values["hash_link_name_{$i}"],
+        $values["hash_link_html_{$i}"],
+        $values["hash_link_fallback_html_{$i}"]
+      );
     }
     Civi::settings()->set('selfservice_personalised_links', $hash_link_specs);
 
@@ -142,12 +148,12 @@ class CRM_Selfservice_Form_Settings extends CRM_Core_Form {
    * @throws \CRM_Core_Exception
    */
   protected function getMessageTemplates() {
-    $templates = ['' => E::ts("disabled")];
+    $templates = ['' => E::ts('disabled')];
     $query = civicrm_api3('MessageTemplate', 'get', [
-        'option.limit' => 0,
-        'is_active'    => 1,
-        'workflow_id'  => ['IS NULL' => 1],
-        'return'       => 'id,msg_title'
+      'option.limit' => 0,
+      'is_active'    => 1,
+      'workflow_id'  => ['IS NULL' => 1],
+      'return'       => 'id,msg_title',
     ]);
     foreach ($query['values'] as $template) {
       $templates[$template['id']] = $template['msg_title'];

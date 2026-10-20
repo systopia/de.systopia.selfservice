@@ -13,6 +13,8 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Selfservice_ExtensionUtil as E;
 
 /**
@@ -32,30 +34,38 @@ class CRM_Selfservice_Upgrader extends CRM_Extension_Upgrader_Base {
    * @return TRUE on success
    * @throws Exception
    */
-   public function upgrade_0003(): bool {
-     $this->ctx->log->info('Migrating SendLink settings to default profile.');
-     $current_values = Civi::settings()->get('selfservice_configuration');
-     $migrate_settings = array_fill_keys([
-       'template_contact_known',
-       'template_contact_unknown',
-       'template_contact_ambiguous',
-       'sender',
-     ], NULL);
-     foreach ($migrate_settings as $setting_name => &$setting) {
-       $setting = $current_values['selfservice_link_request_' . $setting_name];
-     }
-     $default_profile = new CRM_Selfservice_SendLinkProfile(
-       'default',
-       $migrate_settings
-     );
-     $default_profile->save();
-     $current_values = [
-       'log' => $current_values['selfservice_link_request_log'],
-     ];
-     Civi::settings()->set('selfservice_configuration', $current_values);
+  public function upgrade_0003(): bool {
+    $this->ctx->log->info('Migrating SendLink settings to default profile.');
+    $current_values = Civi::settings()->get('selfservice_configuration');
+    $migrate_settings = array_fill_keys([
+      'template_contact_known',
+      'template_contact_unknown',
+      'template_contact_ambiguous',
+      'sender',
+    ], NULL);
+    foreach ($migrate_settings as $setting_name => &$setting) {
+      $setting = $current_values['selfservice_link_request_' . $setting_name];
+    }
+    $default_profile = new CRM_Selfservice_SendLinkProfile(
+      'default',
+      $migrate_settings
+    );
+    $default_profile->save();
+    $current_values = [
+      'log' => $current_values['selfservice_link_request_log'],
+    ];
+    Civi::settings()->set('selfservice_configuration', $current_values);
 
-     CRM_Core_Invoke::rebuildMenuAndCaches();
-     return TRUE;
-   }
+    if (version_compare(CRM_Utils_System::version(), '6.1.0', '>=')) {
+      // @phpstan-ignore argument.type (core's array shape does not know the '*' key)
+      Civi::rebuild(['*' => TRUE, 'sessions' => FALSE, 'triggers' => FALSE])->execute();
+    }
+    else {
+      // @phpstan-ignore staticMethod.deprecated
+      CRM_Core_Invoke::rebuildMenuAndCaches();
+    }
+
+    return TRUE;
+  }
 
 }

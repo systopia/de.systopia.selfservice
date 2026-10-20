@@ -13,9 +13,11 @@
 | written permission from the original author(s).             |
 +-------------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 require_once 'selfservice.civix.php';
 use CRM_Selfservice_ExtensionUtil as E;
-use \Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Implements hook_civicrm_container()
@@ -23,8 +25,8 @@ use \Symfony\Component\DependencyInjection\ContainerBuilder;
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
  */
 function selfservice_civicrm_container(ContainerBuilder $container) {
-  if ( class_exists("Civi\ActionProvider\Action\AbstractAction")
-      && class_exists("Civi\Selfservice\ActionProvider\Action\ContactResolve")) {
+  if (class_exists('Civi\ActionProvider\Action\AbstractAction')
+      && class_exists('Civi\Selfservice\ActionProvider\Action\ContactResolve')) {
     $container->addCompilerPass(new Civi\Selfservice\ActionProvider\Action\ContactResolve());
     $container->addCompilerPass(new Civi\Selfservice\ActionProvider\Action\GetHash());
     $container->addCompilerPass(new Civi\Selfservice\ActionProvider\Action\SendLink());
@@ -34,14 +36,14 @@ function selfservice_civicrm_container(ContainerBuilder $container) {
 /**
  * Hook implementation: New Tokens
  */
-function selfservice_civicrm_tokens( &$tokens ) {
+function selfservice_civicrm_tokens(&$tokens) {
   CRM_Selfservice_HashLinks::addTokens($tokens);
 }
 
 /**
  * Hook implementation: New Tokens
  */
-function selfservice_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = [], $context = null) {
+function selfservice_civicrm_tokenValues(&$values, $cids, $job = NULL, $tokens = [], $context = NULL) {
   CRM_Selfservice_HashLinks::tokenValues($values, $cids, $job, $tokens, $context);
 }
 
@@ -65,7 +67,10 @@ function selfservice_civicrm_permission(&$permissions) {
   foreach (CRM_Selfservice_SendLinkProfile::getProfiles() as $sendlink_profile) {
     $permissions['selfservice send link ' . $sendlink_profile->getName()] = [
       'label' => E::ts('SelfService: Send Link (%1 profile)', [1 => $sendlink_profile->getName()]),
-      'description' => E::ts('Selfservice: Access the Selfservice.sendlink API for the %1 profile', [1 => $sendlink_profile->getName()]),
+      'description' => E::ts(
+        'Selfservice: Access the Selfservice.sendlink API for the %1 profile',
+        [1 => $sendlink_profile->getName()]
+      ),
     ];
   }
 
